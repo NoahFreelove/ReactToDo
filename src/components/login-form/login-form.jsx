@@ -49,6 +49,13 @@ return(
                             backgroundColor={"#ec407a"}
                             variant={"contained"}
                         />
+                        <Button
+                            title="Sign Up"
+                            className="button-click"
+                            onClick={() => (history.push("/signup"))}
+
+                            style={{backgroundColor:"#ff5353"}}
+                        />
                     </Grid>
                     <Grid item>
                         <Button
@@ -56,7 +63,7 @@ return(
                             className="button-click"
                             onClick={() => (history.push("/forgot"))}
 
-                            style={{ fontSize: '11px', backgroundColor:"#ff5353"}}
+                            style={{ fontSize: '11px', backgroundColor:"#000000"}}
                         />
                     </Grid>
                 </Grid>

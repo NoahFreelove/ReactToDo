@@ -1,6 +1,4 @@
 {
-  "homepage": "https://noahfreelove.github.io/ReactToDo",
-  "name": "reacttodo",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
