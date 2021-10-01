@@ -5,8 +5,8 @@ import MenuItem from '@mui/material/MenuItem';
 import {Avatar} from "@mui/material";
 import {useHistory} from "react-router-dom";
 
-function ShowAccount(handleClose){
-    if((window.location.href.split("=")[1] === undefined))
+function ShowAccount(handleClose, user){
+    if((user === undefined || null))
     {
         return(<div/>)
     }
@@ -20,11 +20,11 @@ function ShowAccount(handleClose){
     }
 }
 
-export function UserContextMenu (){
+export function UserContextMenu (props){
 
     let history = useHistory()
 
-    let signedIn = (window.location.href.split("=")[1] === undefined)
+    let signedIn = (props.user === undefined)
 
     let options =  signedIn? "Sign In" : "Sign Out"
 
@@ -36,17 +36,17 @@ export function UserContextMenu (){
     };
     const handleClose = (event) => {
         setAnchorEl(null);
-        if(event.currentTarget.className.includes("profile"))
-        {
+        if (event.currentTarget.className.includes("profile")) {
             console.log("view profile")
-        }
-        else if(event.currentTarget.className.includes("sign in/out"))
-        {
-            console.log("sign in/out")
+        } else if (event.currentTarget.className.includes("sign in/out")) {
+            props.setUser(undefined)
             history.push("/")
 
+        } else if (event.currentTarget.className.includes("create-account")) {
+            props.setUser(undefined)
+            history.push("/signup")
         }
-    };
+    }
 
     return (
         <div>
@@ -72,7 +72,7 @@ export function UserContextMenu (){
                     'aria-labelledby': 'basic-button',
                 }}
             >
-                {ShowAccount(handleClose)}
+                {ShowAccount(handleClose, props.user)}
 
                 <MenuItem className={"sign in/out"} onClick={handleClose}>{options}</MenuItem>
                 {signedIn?

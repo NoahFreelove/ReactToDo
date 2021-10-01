@@ -24,15 +24,15 @@ export function App(){
     return(
         <div>
             <Router history={history}>
-                <Appbar/>
+                <Appbar user={user} setUser={setUser}/>
                 <Route exact path={"/login"}>
                     <Login auth={auth} setUser={setUser} user={user}/>
                 </Route>
                 <Route exact path={"/"}>
                     <Login auth={auth} setUser={setUser} user={user}/>
                 </Route>
-                <Route path={"/tasks"}>
-                    <Tasks/>
+                <Route path={"/tasks"} >
+                    <Tasks user={user} auth={auth} history={history}/>
                 </Route>
                 <Route path={"/signup"}>
                     <SignUpPage auth={auth} setUsers={setUsers} users={users}/>

@@ -22,7 +22,7 @@ export const Appbar = (props)=>(
                 </Grid>
             </Grid>
             <Grid item>
-                <UserContextMenu/>
+                <UserContextMenu user={props.user} setUser={props.setUser}/>
             </Grid>
 
         </Toolbar>

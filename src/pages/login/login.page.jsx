@@ -15,8 +15,7 @@ export function Login(props) {
     let history = useHistory();
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    let validLogin = false;
-
+    const [validLogin, setValidLogin] = useState(true)
     const Login = () => {
         signInWithEmailAndPassword(props.auth, username, password)
             .then((userCredential) => {
@@ -29,14 +28,15 @@ export function Login(props) {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 console.log(error)
-                validLogin = false;
+                setValidLogin(false)
             });
+        console.log(validLogin)
     }
 
 
         return(
             <div>
-                {!validLogin? <Alert severity={"error"}>Your Username or Password was incorrect</Alert> : null}
+                {(!validLogin)? <Alert severity={"error"}>Your Username or Password was incorrect</Alert> : null}
                 <Grid container spacing={0} justify="center" direction="row">
                     <Grid
                         container

@@ -5,6 +5,7 @@ import { TaskList } from '../../components/task-list/task-list.component';
 import './Tasks.css';
 import {Typography} from "@mui/material";
 import {AddTaskDialog} from "../../components/add-task/add-task-dialog.component";
+import {useHistory} from "react-router-dom";
 
 
 class Tasks extends React.Component {
@@ -20,7 +21,7 @@ class Tasks extends React.Component {
         searchValue:"",
         date: (new Date()).toLocaleTimeString(),
         loadedData: false,
-        username: "User"
+        username: "User",
     }
 
       this.timerID = setInterval(
@@ -29,9 +30,12 @@ class Tasks extends React.Component {
     );
   }
 
-  loadTasks=()=>{
-      this.setState({username: window.location.href.split("=")[1]})
-
+  loadData=()=>{
+      if(this.props.user === undefined || null)
+      {
+          this.props.history.push("/")
+          window.location.reload(false)
+      }
   }
 
   checkTaskExpiration = () => {
@@ -102,7 +106,7 @@ componentDidMount() {
       if(!this.state.loadedData)
       {
           this.setState({loadedData: true})
-          this.loadTasks();
+          this.loadData();
       }
 }
 
