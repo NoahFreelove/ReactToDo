@@ -4,6 +4,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import {Avatar} from "@mui/material";
 import {useHistory} from "react-router-dom";
+
 function ShowAccount(handleClose){
     if((window.location.href.split("=")[1] === undefined))
     {
@@ -74,6 +75,10 @@ export function UserContextMenu (){
                 {ShowAccount(handleClose)}
 
                 <MenuItem className={"sign in/out"} onClick={handleClose}>{options}</MenuItem>
+                {signedIn?
+                    <MenuItem className={"create-account"} onClick={handleClose}>Sign Up</MenuItem>
+                    :
+                    null}
             </Menu>
         </div>
 

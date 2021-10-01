@@ -4,14 +4,6 @@ import {Button} from "../../components/button/button.component";
 import React, {useState} from "react";
 import {createUserWithEmailAndPassword } from "@firebase/auth";
 
-
-
-
-
-
-
-
-
 export function SignUpPage(props)
 {
     const [username, setUsername] = useState('user')

@@ -8,9 +8,13 @@ import {
 } from "@mui/material";
 
 import "./login-form.css";
+import {signInWithEmailAndPassword} from "@firebase/auth";
 
 export function LoginForm(props)
 {
+
+
+
     let history = useHistory();
 return(
     <div>
@@ -26,7 +30,7 @@ return(
                     <Grid item>
                         <Input style={{width: 400}}
                                type="input"
-                               placeholder="Username"
+                               placeholder="E-mail"
                                onChange={props.changeUsername}
                                variant="outlined"
                         />
@@ -41,6 +45,7 @@ return(
                                variant="outlined"
                         />
                     </Grid>
+
                     <Grid item>
                         <Button
                             title="Submit"
@@ -49,6 +54,9 @@ return(
                             backgroundColor={"#ec407a"}
                             variant={"contained"}
                         />
+
+                    </Grid>
+                    <Grid item>
                         <Button
                             title="Sign Up"
                             className="button-click"

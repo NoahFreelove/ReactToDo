@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
 import { LoginForm } from '../../components/login-form/login-form';
 import { useHistory } from 'react-router-dom';
+import {signInWithEmailAndPassword} from "@firebase/auth";
 
 import {
+    Alert,
     Grid,
 } from "@mui/material";
 
@@ -13,36 +15,28 @@ export function Login(props) {
     let history = useHistory();
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    let validLogin = false;
 
-
-
-    function verifyLoginInfo()
-    {
-        console.log(props.users)
-        for (let i = 0; i < props.users.length; i++) {
-            if(username === props.users[i].username && password === props.users[i].password)
-            {
-                console.log(props.users[i].username)
-                console.log(props.users[i].password)
-                return true;
-            }
-        }
-        return false;
-
+    const Login = () => {
+        signInWithEmailAndPassword(props.auth, username, password)
+            .then((userCredential) => {
+                // Signed in
+                 props.setUser(userCredential.user)
+                 history.push("/tasks")
+                // ...
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(error)
+                validLogin = false;
+            });
     }
-    const SubmitLoginInfo = () => {
-        if(verifyLoginInfo())
-        {
-            history.push(`/tasks?user=${username}`)
-        }
-        else
-        {
 
-        }
-    }
 
         return(
             <div>
+                {!validLogin? <Alert severity={"error"}>Your Username or Password was incorrect</Alert> : null}
                 <Grid container spacing={0} justify="center" direction="row">
                     <Grid
                         container
@@ -51,11 +45,14 @@ export function Login(props) {
                         spacing={2}
                         className="login-form"
                     >
+
                         <LoginForm
-                            onButtonClick={SubmitLoginInfo}
+                            onButtonClick={Login}
                             changeUsername={event => setUsername(event.target.value)}
                             changePassword={event => setPassword(event.target.value)}
+                            auth={props.auth}
                         />
+
                     </Grid>
                 </Grid>
             </div>

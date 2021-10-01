@@ -11,30 +11,34 @@ import {initializeApp} from "@firebase/app";
 import {firebaseConfig} from "./pages/firebasesetup";
 import {getFirestore} from "@firebase/firestore";
 import {getAuth} from "@firebase/auth";
+import {ForgotPasswordPage} from "./pages/forgot/forgot-password";
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app)
-console.log(db)
 const auth = getAuth();
 
 export function App(){
+    const [user, setUser] = useState()
     const history = useHistory();
     const [users, setUsers] = useState([{username:"user", password:"pass", email: "email@email.com"}])
     return(
         <div>
-            <Router history={history} basename={process.env.PUBLIC_URL}>
+            <Router history={history}>
                 <Appbar/>
                 <Route exact path={"/login"}>
-                    <Login auth={auth} users={users}/>
+                    <Login auth={auth} setUser={setUser} user={user}/>
                 </Route>
                 <Route exact path={"/"}>
-                    <Login auth={auth} users={users}/>
+                    <Login auth={auth} setUser={setUser} user={user}/>
                 </Route>
                 <Route path={"/tasks"}>
                     <Tasks/>
                 </Route>
                 <Route path={"/signup"}>
                     <SignUpPage auth={auth} setUsers={setUsers} users={users}/>
+                </Route>
+                <Route path={"/forgot"}>
+                    <ForgotPasswordPage auth={auth}/>
                 </Route>
             </Router>
         </div>
