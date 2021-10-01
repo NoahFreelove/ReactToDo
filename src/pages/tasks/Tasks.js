@@ -45,7 +45,7 @@ class Tasks extends React.Component {
     //console.log(tmpT)
 
     tmpT.map((task)=>{
-        if(task.expires)
+        if(!task.expires)
         {
             return task;
         }
