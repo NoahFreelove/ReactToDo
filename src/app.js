@@ -36,10 +36,22 @@ export function App(){
     }
 
     const uploadData = async (UploadType, username = "", newTasks = []) => {
-        await setDoc(doc(db, "users", auth.currentUser.uid), {
+        console.log(UploadType)
+        if (UploadType === 0 || newTasks === [])
+        {
+            await setDoc(doc(db, "users", auth.currentUser.uid), {
+                name: username,
+                tasks: []
+            });
+        }
+        else
+        {
+            await setDoc(doc(db, "users", auth.currentUser.uid), {
                 name: username,
                 tasks: ArrayToMap(newTasks)
             });
+        }
+
 
     }
 
