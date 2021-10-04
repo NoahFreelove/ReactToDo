@@ -27,12 +27,9 @@ export function Login(props) {
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                console.log(error)
                 setValidLogin(false)
             });
-        console.log(validLogin)
     }
-
 
         return(
             <div>

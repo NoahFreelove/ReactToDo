@@ -8,13 +8,9 @@ import {
 } from "@mui/material";
 
 import "./login-form.css";
-import {signInWithEmailAndPassword} from "@firebase/auth";
 
 export function LoginForm(props)
 {
-
-
-
     let history = useHistory();
 return(
     <div>

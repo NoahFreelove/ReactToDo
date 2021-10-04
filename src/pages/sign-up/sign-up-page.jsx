@@ -17,6 +17,7 @@ export function SignUpPage(props)
                 // Signed in
                 //const user = userCredential.user;
                 setCreatedUser(true)
+                props.uploadData(0, username,[])
                 // ...
             })
             .catch((error) => {

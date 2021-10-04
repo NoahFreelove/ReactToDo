@@ -11,6 +11,7 @@ import React from "react";
 import Button from "@mui/material/Button";
 import {Input} from "../input/input.component";
 import NewTaskIcon from "@mui/icons-material/Add";
+import {Tooltip} from "@material-ui/core";
 
 let invalidEntry = {invalid: false, reason: ""};
 
@@ -48,23 +49,14 @@ export function AddTaskDialog(props){
         setOpen(false);
     };
 
-    function HandleInvalidEntryText(){
-        if(invalidEntry.invalid)
-        {
-            return(
-                <Typography color={"red"}>{invalidEntry.reason}</Typography>
-            )
-        }
-        else {
-            return null;
-        }
-    }
 
     return (
         <div>
+            <Tooltip title="Create New Task">
             <IconButton onClick={handleClickOpen} sx={{ position: 'absolute', bottom: 16, right: 16, color: "#FFFFFF", width: 64, height: 64}} style={{ backgroundColor: '#ec407a' }}>
                 <NewTaskIcon/>
             </IconButton>
+            </Tooltip>
             <Dialog variant="contained" open={open} onClose={handleClose}>
                 <DialogTitle>Create New Task</DialogTitle>
                 <DialogContent>
@@ -72,7 +64,7 @@ export function AddTaskDialog(props){
                         Fill out the required forms to create a new task.
                     </DialogContentText>
 
-                    <HandleInvalidEntryText/>
+                    {invalidEntry.invalid? <Typography color={"red"}>{invalidEntry.reason}</Typography> : null}
                     <Input
                         name="newTaskTitle"
                         onChange={props.handleChange}

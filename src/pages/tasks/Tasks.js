@@ -5,13 +5,17 @@ import { TaskList } from '../../components/task-list/task-list.component';
 import './Tasks.css';
 import {Typography} from "@mui/material";
 import {AddTaskDialog} from "../../components/add-task/add-task-dialog.component";
-import {useHistory} from "react-router-dom";
+import {doc, getDoc} from "@firebase/firestore";
+import {LoadTasks} from "../../components/load-tasks/download-tasks.component";
+import {UploadTasks} from "../../components/save-tasks/upload-tasks.component";
+import {map} from "react-bootstrap/ElementChildren";
 
 
 class Tasks extends React.Component {
 
   constructor(props) {
     super(props);
+
 
     this.state = {
         tasks: [],
@@ -22,21 +26,46 @@ class Tasks extends React.Component {
         date: (new Date()).toLocaleTimeString(),
         loadedData: false,
         username: "User",
+        fbTasks: (this.props.user==null)? null : doc(this.props.db, 'users', this.props.user.uid)
     }
-
       this.timerID = setInterval(
         () => this.tick(),
         1000
     );
   }
 
-  loadData=()=>{
-      if(this.props.user === undefined || null)
-      {
+
+  loadData = async () => {
+      if (this.props.user === undefined || null) {
           this.props.history.push("/")
           window.location.reload(false)
+          return;
+      }
+      let docSnap = await getDoc(this.state.fbTasks);
+
+      function MapToArray(newMap) {
+
+            let count = 0;
+
+            for(let prop in newMap) {if(newMap.hasOwnProperty(prop)) ++count;}
+
+            let newArr=[]
+            for (let i = 0; i < count; i++) {
+              newArr.push(newMap[i])
+            }
+
+            return newArr
+      }
+
+      if (docSnap.exists()) {
+          this.setState({tasks: MapToArray(docSnap.data().tasks), username: docSnap.data().name})
+
+      } else {
+          //console.log("Document Does Not Exist!")
       }
   }
+
+
 
   checkTaskExpiration = () => {
     let currDay = new Date();
@@ -62,7 +91,7 @@ class Tasks extends React.Component {
 
 
 
-    addTaskHandler = () => {
+  addTaskHandler = () => {
       if(this.state.newTaskTitle === "")
       {
           return {invalid: true, reason:"You are missing a task title"};
@@ -102,7 +131,8 @@ class Tasks extends React.Component {
           }
       }
   }
-componentDidMount() {
+
+  componentDidMount() {
       if(!this.state.loadedData)
       {
           this.setState({loadedData: true})
@@ -110,7 +140,7 @@ componentDidMount() {
       }
 }
 
-    componentWillUnmount() {
+  componentWillUnmount() {
     clearInterval(this.timerID);
   }
 
@@ -121,14 +151,15 @@ componentDidMount() {
     this.checkTaskExpiration()
   }
 
-
   handleChange = (e) => {
     this.setState({[e.target.name]: e.target.value})
 
   }
-    handleCheckChange = (e) => {
+
+  handleCheckChange = (e) => {
         this.setState({[e.target.name]: e.target.checked})
-    }
+  }
+
   render() {
     const { tasks, searchValue } = this.state
     const filteredTasks = tasks.filter((task) =>
@@ -157,6 +188,8 @@ componentDidMount() {
                            handleChange={this.handleChange}
                            handleCheckChange={this.handleCheckChange}
                            onClick={this.addTaskHandler}/>
+            <LoadTasks loadTasks={this.loadData}/>
+            <UploadTasks tasks={this.state.tasks} uploadData={this.props.uploadData} username={this.state.username}/>
         </header>
       </div>
     )
