@@ -63,6 +63,10 @@ class Tasks extends React.Component {
       } else {
           //console.log("Document Does Not Exist!")
       }
+      if(this.props.ssoLogin)
+      {
+          this.setState({username: this.props.ssoName})
+      }
   }
 
 

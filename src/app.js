@@ -18,14 +18,11 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app)
 const auth = getAuth();
 
-
-
-
 export function App(){
     const [user, setUser] = useState()
     const history = useHistory();
-
-
+    const [ssoName, setSsoName] = useState("")
+    const [ssoLogin, setSsoLogin] = useState(false)
 
     function ArrayToMap(arr)
     {
@@ -36,22 +33,17 @@ export function App(){
     }
 
     const uploadData = async (UploadType, username = "", newTasks = []) => {
-        console.log(UploadType)
-        if (UploadType === 0 || newTasks === [])
-        {
+        // upload type 0 is for a new user being created. upload type 1 is for updating tasks
+        if (UploadType === 0) {
+            newTasks = {}
+        }
+        else{
+            newTasks = ArrayToMap(newTasks)
+        }
             await setDoc(doc(db, "users", auth.currentUser.uid), {
                 name: username,
-                tasks: []
+                tasks: newTasks
             });
-        }
-        else
-        {
-            await setDoc(doc(db, "users", auth.currentUser.uid), {
-                name: username,
-                tasks: ArrayToMap(newTasks)
-            });
-        }
-
 
     }
 
@@ -61,16 +53,28 @@ export function App(){
             <Router history={history}>
                 <Appbar user={user} setUser={setUser}/>
                 <Route exact path={"/login"}>
-                    <Login auth={auth} setUser={setUser} user={user}/>
+                    <Login auth={auth} setUser={setUser} user={user}
+                           setSsoName={setSsoName}
+                           setSsologin={setSsoLogin}
+                    />
                 </Route>
                 <Route exact path={"/"}>
-                    <Login auth={auth} setUser={setUser} user={user}/>
-                </Route>
+                    <Login auth={auth} setUser={setUser} user={user}
+                           setSsoName={setSsoName}
+                           setSsologin={setSsoLogin}
+                    />                </Route>
                 <Route path={"/tasks"} >
-                    <Tasks user={user} auth={auth} history={history} db={db} uploadData={uploadData}/>
+                    <Tasks user={user} auth={auth} history={history}
+                           db={db}
+                           uploadData={uploadData}
+                           ssoName={ssoName}
+                           ssoLogin={ssoLogin}/>
                 </Route>
                 <Route path={"/signup"}>
-                    <SignUpPage auth={auth} user={user} uploadData={uploadData}/>
+                    <SignUpPage auth={auth} setUser={setUser} user={user}
+                                setSsoName={setSsoName}
+                                setSsologin={setSsoLogin}
+                                uploadData={uploadData}/>
                 </Route>
                 <Route path={"/forgot"}>
                     <ForgotPasswordPage auth={auth}/>

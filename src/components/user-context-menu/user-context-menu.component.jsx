@@ -13,7 +13,7 @@ function ShowAccount(handleClose, user){
     else {
         return(
             <div>
-                <MenuItem className={"profile"} onClick={handleClose}>Profile</MenuItem>
+                <MenuItem className={"tasks"} onClick={handleClose}>View Tasks</MenuItem>
                 <MenuItem onClick={handleClose}>My account</MenuItem>
             </div>
         )
@@ -36,7 +36,7 @@ export function UserContextMenu (props){
     };
     const handleClose = (event) => {
         setAnchorEl(null);
-        if (event.currentTarget.className.includes("profile")) {
+        if (event.currentTarget.className.includes("tasks")) {
             console.log("view profile")
         } else if (event.currentTarget.className.includes("sign in/out")) {
             props.setUser(undefined)
