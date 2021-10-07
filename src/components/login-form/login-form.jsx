@@ -54,12 +54,9 @@ return(
                             onClick={props.onButtonClick}
                             backgroundColor={"#ec407a"}
                             variant={"contained"}
+                            sx={{margin:"5px"}}
                         />
-                    </Grid>
 
-                    <Typography align={"center"}>Or...</Typography>
-
-                    <Grid item>
                         <MuiButton
                             onClick={ props.ShowSSO }
                             variant={"contained"}
