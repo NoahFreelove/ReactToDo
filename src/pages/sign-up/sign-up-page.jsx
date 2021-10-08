@@ -20,11 +20,11 @@ export function SignUpPage(props)
     const handleCreateAccount = async () => {
 
         createUserWithEmailAndPassword(props.auth, email, password)
-            .then((userCredential) => {
+            .then(async (userCredential) => {
                 // Signed in
                 //const user = userCredential.user;
                 setCreatedUser(true)
-                UploadData(0, username, [])
+                await UploadData(0, username, [])
                 // ...
             })
             .catch((error) => {
@@ -32,7 +32,7 @@ export function SignUpPage(props)
                 const errorMessage = error.message;*/
                 // ..
                 setCreatedUser(false)
-            });
+            }).then(()=>{history.push("/tasks")})
         }
 
     const SingleSignOn = async () => {
