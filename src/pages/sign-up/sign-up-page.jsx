@@ -2,10 +2,11 @@ import {Alert, Button as MuiButton, Grid, Typography} from "@mui/material";
 import {Input} from "../../components/input/input.component";
 import {Button} from "../../components/button/button.component";
 import React, {useState} from "react";
-import {createUserWithEmailAndPassword } from "@firebase/auth";
+import {createUserWithEmailAndPassword} from "@firebase/auth";
 import GoogleIcon from "@mui/icons-material/Google";
 import {GoogleAuthProvider, signInWithPopup} from "firebase/auth";
 import {useHistory} from "react-router-dom";
+import {ShowSSO, UploadData} from "../../lib/firebase.util";
 
 export function SignUpPage(props)
 {
@@ -23,7 +24,7 @@ export function SignUpPage(props)
                 // Signed in
                 //const user = userCredential.user;
                 setCreatedUser(true)
-                props.uploadData(0, username,[])
+                UploadData(0, username, [])
                 // ...
             })
             .catch((error) => {
@@ -34,32 +35,10 @@ export function SignUpPage(props)
             });
         }
 
-    const ShowSSO = () => {
-        signInWithPopup(props.auth, provider)
-            .then((result) => {
-                // This gives you a Google Access Token. You can use it to access the Google API.
-                const credential = GoogleAuthProvider.credentialFromResult(result);
-                const token = credential.accessToken;
-                // The signed-in user info.
-                const user = result.user;
-                let firstName = result.user.displayName.split(" ")[0];
-                props.setSsoName(firstName)
-                props.setSsologin(true)
-                props.setUser(user)
-                history.push("/tasks")
-
-                // ...
-            }).catch((error) => {
-            // Handle Errors here.
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            // The email of the user's account used.
-            const email = error.email;
-            // The AuthCredential type that was used.
-            const credential = GoogleAuthProvider.credentialFromError(error);
-            console.log(errorMessage)
-            // ...
-        });
+    const SingleSignOn = async () => {
+        props.setSsologin(true)
+        await ShowSSO(true)
+        history.push("/tasks")
     }
 
 
@@ -118,7 +97,7 @@ export function SignUpPage(props)
 
                     <Grid item>
                         <MuiButton
-                            onClick={ShowSSO}
+                            onClick={SingleSignOn}
                             variant={"contained"}
                             endIcon={ <GoogleIcon/>}
                         >

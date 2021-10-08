@@ -3,7 +3,9 @@ import { LoginForm } from '../../components/login-form/login-form';
 import { useHistory } from 'react-router-dom';
 import {signInWithEmailAndPassword} from "@firebase/auth";
 import { GoogleAuthProvider } from "firebase/auth";
-import { getAuth, signInWithPopup } from "firebase/auth";
+import { signInWithPopup } from "firebase/auth";
+import { ShowSSO } from "../../lib/firebase.util"
+import {SetSsoName} from "../../app"
 import {
     Alert,
     Grid,
@@ -14,7 +16,6 @@ import {Button} from "../../components/button/button.component";
 
 export function Login(props) {
     let history = useHistory();
-    const provider = new GoogleAuthProvider();
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [validLogin, setValidLogin] = useState(true)
@@ -35,33 +36,10 @@ export function Login(props) {
             });
     }
 
-    const ShowSSO = () => {
-        signInWithPopup(props.auth, provider)
-            .then((result) => {
-                // This gives you a Google Access Token. You can use it to access the Google API.
-                const credential = GoogleAuthProvider.credentialFromResult(result);
-                const token = credential.accessToken;
-                // The signed-in user info.
-                const user = result.user;
-                let firstName = result.user.displayName.split(" ")[0];
-                props.setSsoName(firstName)
-                props.setSsologin(true)
-                props.setUser(user)
-                history.push("/tasks")
-
-                // ...
-            }).catch((error) => {
-            // Handle Errors here.
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            // The email of the user's account used.
-            const email = error.email;
-            // The AuthCredential type that was used.
-            const credential = GoogleAuthProvider.credentialFromError(error);
-            console.log(errorMessage)
-            // ...
-        });
-    }
+     const SingleSignOn = async() => {
+         props.setSsologin(true)
+         ShowSSO(false).then(r=>{SetSsoName(r); history.push("/tasks")})
+     }
 
         return(
             <div>
@@ -81,7 +59,7 @@ export function Login(props) {
                             changeUsername={event => setUsername(event.target.value)}
                             changePassword={event => setPassword(event.target.value)}
                             auth={props.auth}
-                            ShowSSO={ShowSSO}
+                            ShowSSO={SingleSignOn}
                         />
                     </Grid>
                 </Grid>

@@ -9,7 +9,8 @@ import {doc, getDoc} from "@firebase/firestore";
 import {LoadTasks} from "../../components/load-tasks/download-tasks.component";
 import {UploadTasks} from "../../components/save-tasks/upload-tasks.component";
 import {map} from "react-bootstrap/ElementChildren";
-
+import {DownloadData, UploadData} from "../../lib/firebase.util";
+import {SetSsoName} from "../../app"
 
 class Tasks extends React.Component {
 
@@ -36,36 +37,20 @@ class Tasks extends React.Component {
 
 
   loadData = async () => {
-      if (this.props.user === undefined || null) {
+      if ((this.props.auth.currentUser === undefined || null)) {
           this.props.history.push("/")
           window.location.reload(false)
           return;
       }
-      let docSnap = await getDoc(this.state.fbTasks);
 
-      function MapToArray(newMap) {
+      let downloadedContent = await DownloadData()
+      console.log(downloadedContent)
 
-            let count = 0;
+      this.setState({tasks: downloadedContent[0], username: downloadedContent[1]})
 
-            for(let prop in newMap) {if(newMap.hasOwnProperty(prop)) ++count;}
-
-            let newArr=[]
-            for (let i = 0; i < count; i++) {
-              newArr.push(newMap[i])
-            }
-
-            return newArr
-      }
-
-      if (docSnap.exists()) {
-          this.setState({tasks: MapToArray(docSnap.data().tasks), username: docSnap.data().name})
-
-      } else {
-          //console.log("Document Does Not Exist!")
-      }
       if(this.props.ssoLogin)
       {
-          this.setState({username: this.props.ssoName})
+          this.setState({username: downloadedContent[1]})
       }
   }
 
@@ -193,7 +178,11 @@ class Tasks extends React.Component {
                            handleCheckChange={this.handleCheckChange}
                            onClick={this.addTaskHandler}/>
             <LoadTasks loadTasks={this.loadData}/>
-            <UploadTasks tasks={this.state.tasks} uploadData={this.props.uploadData} username={this.state.username}/>
+            <UploadTasks tasks={this.state.tasks}
+                         username={this.state.username}
+                        db={this.props.db}
+                         auth={this.props.auth}
+            />
         </header>
       </div>
     )

@@ -5,6 +5,7 @@ import {Alert, Input, Typography} from "@mui/material";
 import {Button} from "../../components/button/button.component";
 import {Grid} from "@material-ui/core";
 import {useHistory} from "react-router-dom";
+import {PasswordReset} from "../../lib/firebase.util";
 
 
 export function ForgotPasswordPage(props){
@@ -13,14 +14,8 @@ export function ForgotPasswordPage(props){
     let history = useHistory()
     const [createdUser, setCreatedUser] = useState()
 
-    const handlePasswordReset = () => {
-        sendPasswordResetEmail(props.auth, email)
-            .then(function () {
-                setCreatedUser(true)
-            }).catch(function (e) {
-            console.log(e)
-            setCreatedUser(false)
-        })
+    const handlePasswordReset = async () => {
+        await PasswordReset(email)
     }
 
     const handleClick = () => {
