@@ -5,7 +5,6 @@ import {signInWithEmailAndPassword} from "@firebase/auth";
 import { GoogleAuthProvider } from "firebase/auth";
 import { signInWithPopup } from "firebase/auth";
 import { ShowSSO } from "../../lib/firebase.util"
-import {SetSsoName} from "../../app"
 import {
     Alert,
     Grid,
@@ -38,7 +37,8 @@ export function Login(props) {
 
      const SingleSignOn = async() => {
          props.setSsologin(true)
-         ShowSSO(false).then(r=>{SetSsoName(r); history.push("/tasks")})
+         await ShowSSO(false).then(r=>{props.setSsoName(r);console.log(props.ssoName);history.push("/tasks")})
+
      }
 
         return(

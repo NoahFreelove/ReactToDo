@@ -27,7 +27,7 @@ class Tasks extends React.Component {
         date: (new Date()).toLocaleTimeString(),
         loadedData: false,
         username: "User",
-        fbTasks: (this.props.user==null)? null : doc(this.props.db, 'users', this.props.user.uid)
+        fbTasks: (this.props.auth.currentUser===null)? null : doc(this.props.db, 'users', this.props.auth.currentUser.uid)
     }
       this.timerID = setInterval(
         () => this.tick(),
@@ -37,21 +37,37 @@ class Tasks extends React.Component {
 
 
   loadData = async () => {
-      if ((this.props.auth.currentUser === undefined || null)) {
+      if ((this.props.auth.currentUser === null)) {
           this.props.history.push("/")
           window.location.reload(false)
-          return;
+      }
+      else {
+          try {
+              let downloadedContent = await DownloadData()
+
+              this.setState({tasks: downloadedContent[0], username: downloadedContent[1]})
+
+              if(this.props.ssoLogin)
+              {
+                  this.setState({username: downloadedContent[1]})
+              }
+          }
+          // if the user data hasnt been created, create it then load it
+          catch (e)
+          {
+              console.log(e)
+              if(this.props.ssoLogin)
+              {
+                  await UploadData(0,this.props.ssoName, []).then(()=>{this.loadData()})
+              }
+              else {
+                  await UploadData(0,this.state.username, []).then(()=>{this.loadData()})
+              }
+          }
+
       }
 
-      let downloadedContent = await DownloadData()
-      console.log(downloadedContent)
 
-      this.setState({tasks: downloadedContent[0], username: downloadedContent[1]})
-
-      if(this.props.ssoLogin)
-      {
-          this.setState({username: downloadedContent[1]})
-      }
   }
 
 

@@ -13,16 +13,12 @@ import {auth as initializedAuth} from "./lib/firebase.util"
 import {db as initializedDb} from "./lib/firebase.util"
 
 
-export let ssoName
-
-const  SetSsoName = (newName) => {
-    ssoName = newName;
-}
 
 function App(){
     const history = useHistory();
     const [ssoLogin, setSsoLogin] = useState(false)
     const [user, setUser] = useState()
+    const [ssoName, setSsoName] = useState()
 
     return(
         <div>
@@ -30,13 +26,13 @@ function App(){
                 <Appbar user={user} setUser={setUser}/>
                 <Route exact path={"/login"}>
                     <Login auth={initializedAuth} setUser={setUser} user={user}
-                           setSsoName={SetSsoName}
+                           setSsoName={setSsoName}
                            setSsologin={setSsoLogin}
                     />
                 </Route>
                 <Route exact path={"/"}>
                     <Login auth={initializedAuth} setUser={setUser} user={user}
-                           setSsoName={SetSsoName}
+                           setSsoName={setSsoName}
                            setSsologin={setSsoLogin}
                            ssoName={ssoName}
                     />
@@ -49,7 +45,7 @@ function App(){
                 </Route>
                 <Route path={"/signup"}>
                     <SignUpPage auth={initializedAuth} setUser={setUser} user={user}
-                                setSsoName={SetSsoName}
+                                setSsoName={setSsoName}
                                 setSsologin={setSsoLogin}
                     />
                 </Route>
@@ -61,4 +57,4 @@ function App(){
     )
 
 }
-export {App, SetSsoName}
+export {App}

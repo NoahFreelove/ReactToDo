@@ -1,12 +1,9 @@
-// 1- Move all your firebase code here
-// 2- Import your config file here
-// 3- Base on the config file, initialize your firebase app
 // noinspection JSCheckFunctionSignatures
 
-import {initializeApp} from "@firebase/app";
-
-import {doc, setDoc} from "firebase/firestore";
 import {firebaseConfig} from "./config";
+
+import {initializeApp} from "@firebase/app";
+import {doc, setDoc} from "firebase/firestore";
 import {getDoc, getFirestore} from "@firebase/firestore";
 import {getAuth, sendPasswordResetEmail} from "@firebase/auth";
 import {GoogleAuthProvider, signInWithPopup} from "firebase/auth";
@@ -14,6 +11,7 @@ import {GoogleAuthProvider, signInWithPopup} from "firebase/auth";
 export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app)
 export const auth = getAuth();
+
 const provider = new GoogleAuthProvider();
 
 async function UploadData(UploadType, username = "", newTasks){
@@ -39,6 +37,10 @@ async function UploadData(UploadType, username = "", newTasks){
 }
 
 async function DownloadData(){
+    if(auth.currentUser=== null || undefined)
+    {
+        return;
+    }
     let docSnap = await getDoc(doc(db, 'users', auth.currentUser.uid))
     if (docSnap.exists()) {
         return [MapToArray(docSnap.data().tasks), docSnap.data().name]
@@ -48,8 +50,7 @@ async function DownloadData(){
     }
 }
 
-function ArrayToMap(arr)
-{
+function ArrayToMap(arr){
     return arr[0].reduce(function (map, obj, index) {
         map[index] = arr[0][index];
         return map;
@@ -71,8 +72,7 @@ function MapToArray(newMap) {
     return newArr
 }
 
-async function PasswordReset(email)
-{
+async function PasswordReset(email){
     return sendPasswordResetEmail(auth, email)
         .then(function () {
             return true;
@@ -81,6 +81,7 @@ async function PasswordReset(email)
         return false;
         })
 }
+
 async function ShowSSO(newAccount) {
     if(!newAccount) {
         return await signInWithPopup(auth, provider)
