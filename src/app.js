@@ -46,7 +46,8 @@ function App(){
                     />
                 </Route>
                 <Route exact path={"/"}>
-                    <Home user={user} history={history} setSsoName={setSsoName} setUser={setUser} setSsoLogin={setSsoLogin}/>
+                    <Home user={user} history={history}
+                          downloadedContent={downloadedContent} setSsoLogin={setSsoLogin}/>
                 </Route>
                 <Route path={"/tasks"} >
                     <Tasks user={user} auth={initializedAuth} history={history}

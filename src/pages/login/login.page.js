@@ -35,7 +35,7 @@ export function Login(props) {
 
      const SingleSignOn = async() => {
          props.setSsologin(true)
-         await ShowSSO(false, props.setUser).then(r=>{props.setSsoName(r);console.log(props.ssoName);history.push("/tasks")})
+         await ShowSSO(false, props.setUser).then(r=>{props.setSsoName(r);history.push("/tasks")})
 
      }
 

@@ -6,34 +6,18 @@ import {Redirect} from "react-router-dom";
 import {Typography} from "@material-ui/core";
 import {Grid} from "@mui/material";
 
-let downloadedData = false;
-
-const loadData = async (setTasks, setUsername) => {
-
-        if(!downloadedData)
-        {
-            downloadedData = true
-        }
-        else {return}
-        try {
-            let downloadedContent = await DownloadData()
-            setTasks(downloadedContent[0])
-            setUsername(downloadedContent[1])
-        }
-        catch{}
-
-}
+let username
 
 export function Home(props) {
 
-    const [username, setUsername] = useState()
+
     const [tasks, setTasks] = useState()
 
     let loggedIn = (props.user !== undefined)
 
     if(loggedIn)
     {
-        loadData(setTasks,setUsername)
+        username = props.downloadedContent[1]
     }
 
     //<Button title={"ClickMe"} onClick={()=>{console.log(props.user)}}/>
@@ -44,7 +28,7 @@ export function Home(props) {
                 <Grid>
                     <Grid item>
                         <Typography variant="h5">
-                            Welcome {username}
+                            Welcome, {username}
                         </Typography>
                     </Grid>
                 </Grid>
