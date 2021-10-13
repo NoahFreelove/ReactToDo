@@ -2,15 +2,15 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import {Avatar} from "@mui/material";
 import {useHistory} from "react-router-dom";
 import SecurityIcon from '@mui/icons-material/Security';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import HomeIcon from '@mui/icons-material/Home';
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import MenuIcon from '@mui/icons-material/Menu';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import CreateIcon from '@mui/icons-material/Create';
-
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import {IconButton} from "@mui/material";
 function ShowAccount(handleClose, signedIn,user, isAdmin){
     if(!signedIn)
     {
@@ -21,7 +21,7 @@ function ShowAccount(handleClose, signedIn,user, isAdmin){
             <div>
                 <MenuItem className={"home"} onClick={handleClose}><HomeIcon/>Home</MenuItem>
                 <MenuItem className={"tasks"} onClick={handleClose}><CreateIcon/> View Tasks</MenuItem>
-                {isAdmin(user)?<MenuItem className={"view-admin-page"} onClick={handleClose}><SecurityIcon/> Admin Page</MenuItem> : null}
+                {isAdmin()?<MenuItem className={"view-admin-page"} onClick={handleClose}><SecurityIcon/> Admin Page</MenuItem> : null}
             </div>
         )
     }
@@ -61,18 +61,15 @@ export function UserContextMenu (props) {
 
     return (
         <div>
-            <Button
+            <IconButton
                 id="basic-button"
                 aria-controls="basic-menu"
                 aria-haspopup="true"
                 aria-expanded={open ? 'true' : undefined}
 
                 onClick={handleClick}
-                startIcon={<Avatar/>}
                 style={{color: "#FFFFFF"}}
-            >
-                Account
-            </Button>
+            ><MenuIcon/></IconButton>
 
             <Menu
                 id="basic-menu"

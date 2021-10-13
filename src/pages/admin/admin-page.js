@@ -1,6 +1,11 @@
 import adminList from "../../config"
+import {useState} from "react";
+import {DownloadData} from "../../lib/firebase.util";
+
 
 export function AdminPage(props){
+    const [isAdmin, setIsAdmin] = useState(false)
+
     if(props.user === null){
         return(<div>You need to be logged in to use this feature!</div>)
     }

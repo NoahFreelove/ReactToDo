@@ -14,7 +14,7 @@ export const auth = getAuth();
 
 const provider = new GoogleAuthProvider();
 
-async function UploadData(UploadType, username = "", newTasks){
+async function UploadData(UploadType, username = "", admin, newTasks){
 
     if (UploadType === 0) {
         newTasks = {}
@@ -24,6 +24,7 @@ async function UploadData(UploadType, username = "", newTasks){
     }
     try {
         await setDoc(doc(db, "users", auth.currentUser.uid), {
+            admin: admin,
             name: username,
             tasks: newTasks
         });
@@ -43,7 +44,7 @@ async function DownloadData(){
     }
     let docSnap = await getDoc(doc(db, 'users', auth.currentUser.uid))
     if (docSnap.exists()) {
-        return [MapToArray(docSnap.data().tasks), docSnap.data().name]
+        return [MapToArray(docSnap.data().tasks), docSnap.data().name, docSnap.data().admin]
     }
     else {
         //return await UploadData(0, ssoName, [])

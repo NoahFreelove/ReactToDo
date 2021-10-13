@@ -26,6 +26,7 @@ class Tasks extends React.Component {
         date: (new Date()).toLocaleTimeString(),
         loadedData: false,
         username: "User",
+        isAdmin: false,
         fbTasks: (this.props.auth.currentUser===null)? null : doc(this.props.db, 'users', this.props.auth.currentUser.uid)
     }
       this.timerID = setInterval(
@@ -47,8 +48,8 @@ class Tasks extends React.Component {
       else {
           try {
               let downloadedContent = await DownloadData()
-
-              this.setState({tasks: downloadedContent[0], username: downloadedContent[1]})
+              this.props.setDownloadedContent(downloadedContent)
+              this.setState({tasks: downloadedContent[0], username: downloadedContent[1], isAdmin: downloadedContent[2]})
 
               if(this.props.ssoLogin)
               {
@@ -61,10 +62,10 @@ class Tasks extends React.Component {
               console.log(e)
               if(this.props.ssoLogin)
               {
-                  await UploadData(0,this.props.ssoName, []).then(()=>{this.loadData()})
+                  await UploadData(0,this.props.ssoName, this.state.isAdmin, []).then(()=>{this.loadData()})
               }
               else {
-                  await UploadData(0,this.state.username, []).then(()=>{this.loadData()})
+                  await UploadData(0,this.state.username,this.state.isAdmin, []).then(()=>{this.loadData()})
               }
           }
 
@@ -199,6 +200,7 @@ class Tasks extends React.Component {
             <LoadTasks loadTasks={this.loadData}/>
             <UploadTasks tasks={this.state.tasks}
                          username={this.state.username}
+                         isAdmin={this.state.isAdmin}
                         db={this.props.db}
                          auth={this.props.auth}
             />

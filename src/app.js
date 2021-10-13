@@ -9,7 +9,7 @@ import {Appbar} from "./components/app-bar/app-bar.component";
 import {SignUpPage} from "./pages/sign-up/sign-up-page";
 import {ForgotPasswordPage} from "./pages/forgot/forgot-password-page";
 
-import {auth as initializedAuth} from "./lib/firebase.util"
+import {auth as initializedAuth, DownloadData} from "./lib/firebase.util"
 import {db as initializedDb} from "./lib/firebase.util"
 import AdminPage from "./pages/admin/admin-page";
 import {Button} from "./components/button/button.component";
@@ -20,16 +20,18 @@ import {Home} from "./pages/home/home-page";
 function App(){
     const history = useHistory();
     const [ssoLogin, setSsoLogin] = useState(false)
-    const [user, setUser] = useState()
+    const [downloadedContent, setDownloadedContent] = useState([[],"",false])
+    const[user, setUser] = useState()
     const [ssoName, setSsoName] = useState()
-    let adminList = ["fbIPxUQCNER9EOlJQjn1RS96bCf1"]
 
         function IsAdmin(){
             if(user === undefined || user === null)
-            return false;
-        return !(adminList.filter(s => s.includes(user.uid)).length === 0)
-    }
-    React.useEffect(() => { console.log("component updated"); });
+            {
+                return false;
+            }
+            return downloadedContent[2]
+        }
+    React.useEffect(() => {});
 
 
     return(
@@ -51,6 +53,7 @@ function App(){
                            db={initializedDb}
                            ssoName={ssoName}
                            ssoLogin={ssoLogin}
+                           setDownloadedContent={setDownloadedContent}
                     />
                 </Route>
                 <Route path={"/signup"}>
