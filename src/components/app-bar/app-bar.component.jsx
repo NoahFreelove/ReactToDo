@@ -1,6 +1,7 @@
 import {AppBar, createTheme, Grid, Toolbar, Typography} from "@mui/material";
 import {UserContextMenu} from "../user-context-menu/user-context-menu.component";
 import React from "react";
+import {Button} from "../button/button.component";
 
 const theme = createTheme({
     palette: {
@@ -22,7 +23,7 @@ export const Appbar = (props)=>(
                 </Grid>
             </Grid>
             <Grid item>
-                <UserContextMenu user={props.user} setUser={props.setUser}/>
+                <UserContextMenu auth={props.auth} user={props.user} setUser={props.setUser} isAdmin={props.isAdmin}/>
             </Grid>
 
         </Toolbar>

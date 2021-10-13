@@ -11,7 +11,6 @@ import {UploadTasks} from "../../components/save-tasks/upload-tasks.component";
 import {map} from "react-bootstrap/ElementChildren";
 import {DownloadData, UploadData} from "../../lib/firebase.util";
 import {SetSsoName} from "../../app"
-
 class Tasks extends React.Component {
 
   constructor(props) {
@@ -37,8 +36,12 @@ class Tasks extends React.Component {
 
 
   loadData = async () => {
+      if ((this.props.user === undefined)) {
+          this.props.history.push("/login")
+          window.location.reload(false)
+      }
       if ((this.props.auth.currentUser === null)) {
-          this.props.history.push("/")
+          this.props.history.push("/login")
           window.location.reload(false)
       }
       else {

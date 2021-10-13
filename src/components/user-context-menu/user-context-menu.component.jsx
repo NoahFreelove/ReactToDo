@@ -4,47 +4,58 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import {Avatar} from "@mui/material";
 import {useHistory} from "react-router-dom";
+import SecurityIcon from '@mui/icons-material/Security';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import HomeIcon from '@mui/icons-material/Home';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import CreateIcon from '@mui/icons-material/Create';
 
-function ShowAccount(handleClose, user){
-    if((user === undefined || null))
+function ShowAccount(handleClose, signedIn,user, isAdmin){
+    if(!signedIn)
     {
         return(<div/>)
     }
     else {
         return(
             <div>
-                <MenuItem className={"tasks"} onClick={handleClose}>View Tasks</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem className={"home"} onClick={handleClose}><HomeIcon/>Home</MenuItem>
+                <MenuItem className={"tasks"} onClick={handleClose}><CreateIcon/> View Tasks</MenuItem>
+                {isAdmin(user)?<MenuItem className={"view-admin-page"} onClick={handleClose}><SecurityIcon/> Admin Page</MenuItem> : null}
             </div>
         )
     }
 }
 
-export function UserContextMenu (props){
 
+export function UserContextMenu (props) {
     let history = useHistory()
-
-    let signedIn = (props.user === undefined)
-
-    let options =  signedIn? "Sign In" : "Sign Out"
-
+    let signedIn = (props.user !== undefined)
+    let signInOutText =  !signedIn? "Sign In" : "Sign Out"
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
 
     const handleClick = event => {
         setAnchorEl(event.currentTarget);
     };
+
     const handleClose = (event) => {
         setAnchorEl(null);
         if (event.currentTarget.className.includes("tasks")) {
-            console.log("view profile")
+            history.push("/tasks")
         } else if (event.currentTarget.className.includes("sign in/out")) {
             props.setUser(undefined)
-            history.push("/")
+            props.auth.signOut()
+            history.push("/login")
 
         } else if (event.currentTarget.className.includes("create-account")) {
-            props.setUser(undefined)
             history.push("/signup")
+        }
+        else if (event.currentTarget.className.includes("view-admin-page")) {
+            history.push("/admin")
+        }
+        else if (event.currentTarget.className.includes("home")) {
+            history.push("/")
         }
     }
 
@@ -72,13 +83,17 @@ export function UserContextMenu (props){
                     'aria-labelledby': 'basic-button',
                 }}
             >
-                {ShowAccount(handleClose, props.user)}
+                {ShowAccount(handleClose, signedIn, props.user, props.isAdmin)}
+                {!signedIn?
+                    <MenuItem className={"sign in/out"} onClick={handleClose}><AccountBoxIcon/>Sign In</MenuItem>:
+                    <MenuItem className={"sign in/out"} onClick={handleClose}><ExitToAppIcon/>Sign Out</MenuItem>
+                }
 
-                <MenuItem className={"sign in/out"} onClick={handleClose}>{options}</MenuItem>
-                {signedIn?
-                    <MenuItem className={"create-account"} onClick={handleClose}>Sign Up</MenuItem>
+                {!signedIn?
+                    <MenuItem className={"create-account"} onClick={handleClose}><AddBoxIcon/> Sign Up</MenuItem>
                     :
                     null}
+
             </Menu>
         </div>
 

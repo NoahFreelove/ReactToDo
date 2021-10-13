@@ -82,7 +82,7 @@ async function PasswordReset(email){
         })
 }
 
-async function ShowSSO(newAccount) {
+async function ShowSSO(newAccount, setUser) {
     if(!newAccount) {
         return await signInWithPopup(auth, provider)
             .then(async (result) => {
@@ -90,6 +90,7 @@ async function ShowSSO(newAccount) {
                 const credential = await GoogleAuthProvider.credentialFromResult(result);
                 const token = credential.accessToken;
                 // The signed-in user info.
+                setUser(result.user)
                 return result.user.displayName.split(" ")[0]
                 // ...
             }).catch((error) => {
@@ -110,7 +111,7 @@ async function ShowSSO(newAccount) {
                 // This gives you a Google Access Token. You can use it to access the Google API.
                 const credential = await GoogleAuthProvider.credentialFromResult(result);
                 // The signed-in user info.
-                const user = result.user;
+                setUser(result.user)
                 let firstName = result.user.displayName.split(" ")[0];
 
                 await UploadData(0, firstName, [])

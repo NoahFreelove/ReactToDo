@@ -2,8 +2,6 @@ import React, {useState} from 'react';
 import { LoginForm } from '../../components/login-form/login-form';
 import { useHistory } from 'react-router-dom';
 import {signInWithEmailAndPassword} from "@firebase/auth";
-import { GoogleAuthProvider } from "firebase/auth";
-import { signInWithPopup } from "firebase/auth";
 import { ShowSSO } from "../../lib/firebase.util"
 import {
     Alert,
@@ -23,7 +21,7 @@ export function Login(props) {
         signInWithEmailAndPassword(props.auth, username, password)
             .then((userCredential) => {
                 // Signed in
-                 props.setUser(userCredential.user)
+                props.setUser(userCredential.user)
                 props.setSsologin(false)
                  history.push("/tasks")
                 // ...
@@ -37,7 +35,7 @@ export function Login(props) {
 
      const SingleSignOn = async() => {
          props.setSsologin(true)
-         await ShowSSO(false).then(r=>{props.setSsoName(r);console.log(props.ssoName);history.push("/tasks")})
+         await ShowSSO(false, props.setUser).then(r=>{props.setSsoName(r);console.log(props.ssoName);history.push("/tasks")})
 
      }
 
