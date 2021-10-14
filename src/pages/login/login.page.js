@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { LoginForm } from '../../components/login-form/login-form';
 import { useHistory } from 'react-router-dom';
 import {signInWithEmailAndPassword} from "@firebase/auth";
-import { ShowSSO } from "../../lib/firebase.util"
+import {ShowSSO, SignInWithPassword} from "../../lib/firebase.util"
 import {
     Alert,
     Grid,
@@ -17,20 +17,19 @@ export function Login(props) {
     const [password, setPassword] = useState('')
     const [validLogin, setValidLogin] = useState(true)
 
-    const Login = () => {
-        signInWithEmailAndPassword(props.auth, username, password)
-            .then((userCredential) => {
-                // Signed in
-                props.setUser(userCredential.user)
+    const Login = async () => {
+         await SignInWithPassword(props.auth, username, password).then(r =>{
+            if(r[0])
+            {
+                props.setUser(r[0])
+                setValidLogin(true)
                 props.setSsologin(false)
-                 history.push("/tasks")
-                // ...
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                setValidLogin(false)
-            });
+                history.push("/tasks")
+                return;
+            }
+            setValidLogin(false)
+        })
+
     }
 
      const SingleSignOn = async() => {

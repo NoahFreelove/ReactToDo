@@ -5,7 +5,7 @@ import {firebaseConfig} from "./config";
 import {initializeApp} from "@firebase/app";
 import {doc, setDoc} from "firebase/firestore";
 import {getDoc, getFirestore} from "@firebase/firestore";
-import {getAuth, sendPasswordResetEmail} from "@firebase/auth";
+import {getAuth, sendPasswordResetEmail, signInWithEmailAndPassword} from "@firebase/auth";
 import {GoogleAuthProvider, signInWithPopup} from "firebase/auth";
 
 export const app = initializeApp(firebaseConfig);
@@ -14,7 +14,7 @@ export const auth = getAuth();
 
 const provider = new GoogleAuthProvider();
 
-async function UploadData(UploadType, username = "", admin, newTasks){
+async function UploadData(UploadType, newTasks = [], username = "", admin = false){
 
     if (UploadType === 0) {
         newTasks = {}
@@ -115,7 +115,7 @@ async function ShowSSO(newAccount, setUser) {
                 setUser(result.user)
                 let firstName = result.user.displayName.split(" ")[0];
 
-                await UploadData(0, firstName, [])
+                await UploadData(0, [], firstName)
 
                 // ...
             }).catch((error) => {
@@ -132,4 +132,19 @@ async function ShowSSO(newAccount, setUser) {
     }
 }
 
-export {UploadData, DownloadData, ShowSSO, PasswordReset}
+async function SignInWithPassword(auth, username, password){
+    return await signInWithEmailAndPassword(auth, username, password)
+        .then((userCredential) => {
+            // Signed in
+            return[userCredential, true]
+
+            // ...
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            return [null, false]
+        });
+}
+
+export {UploadData, DownloadData, ShowSSO, PasswordReset, SignInWithPassword}

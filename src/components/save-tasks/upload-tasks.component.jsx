@@ -13,7 +13,7 @@ export function UploadTasks(props){
     const [uploadedTasks, setUploadedTasks] = useState();
     const [failedUpload, setFailedUpload] = useState(false);
     const handleClick = () => {
-        UploadData(1, props.username, props.isAdmin, [props.tasks], props.db, props.auth).then( r => setFailedUpload(!r))
+        UploadData(1,[props.tasks], props.username, props.isAdmin, ).then( r => setFailedUpload(!r))
         setUploadedTasks(true)
         setTimeout(hideAlert, 3000)
     };

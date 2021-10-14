@@ -2,14 +2,14 @@ import {auth as initializedAuth, DownloadData, UploadData} from "../../lib/fireb
 import Login from "../login/login.page";
 import React, {useState} from "react";
 import {Button} from "../../components/button/button.component";
-import {Redirect} from "react-router-dom";
+import {Redirect, useHistory} from "react-router-dom";
 import {Typography} from "@material-ui/core";
 import {Grid} from "@mui/material";
 
 let username
 
 export function Home(props) {
-
+    const history = useHistory()
 
     const [tasks, setTasks] = useState()
 
@@ -34,7 +34,10 @@ export function Home(props) {
                 </Grid>
                 <pre/>
 
-                <Button title={"View Tasks"} backgroundColor={"#e24076"}/>
+                <Button title={"View Tasks"} backgroundColor={"#e24076"}
+                        onClick={()=>{
+                            history.push("/tasks")
+                        }}/>
 
             </div>
         )

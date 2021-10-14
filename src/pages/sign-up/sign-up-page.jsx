@@ -24,7 +24,7 @@ export function SignUpPage(props)
                 // Signed in
                 //const user = userCredential.user;
                 setCreatedUser(true)
-                await UploadData(0, username, [])
+                await UploadData(0, [], username,false, )
                 // ...
             })
             .catch((error) => {

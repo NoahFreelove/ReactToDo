@@ -62,10 +62,10 @@ class Tasks extends React.Component {
               console.log(e)
               if(this.props.ssoLogin)
               {
-                  await UploadData(0,this.props.ssoName, this.state.isAdmin, []).then(()=>{this.loadData()})
+                  await UploadData(0,[],this.props.ssoName, this.state.isAdmin).then(()=>{this.loadData()})
               }
               else {
-                  await UploadData(0,this.state.username,this.state.isAdmin, []).then(()=>{this.loadData()})
+                  await UploadData(0,[],this.state.username,this.state.isAdmin).then(()=>{this.loadData()})
               }
           }
 

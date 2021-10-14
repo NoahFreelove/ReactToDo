@@ -9,10 +9,9 @@ import {Appbar} from "./components/app-bar/app-bar.component";
 import {SignUpPage} from "./pages/sign-up/sign-up-page";
 import {ForgotPasswordPage} from "./pages/forgot/forgot-password-page";
 
-import {auth as initializedAuth, DownloadData} from "./lib/firebase.util"
+import {auth as initializedAuth} from "./lib/firebase.util"
 import {db as initializedDb} from "./lib/firebase.util"
 import AdminPage from "./pages/admin/admin-page";
-import {Button} from "./components/button/button.component";
 import {Home} from "./pages/home/home-page";
 
 
