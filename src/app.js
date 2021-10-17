@@ -26,7 +26,6 @@ function App () {
     }
     return downloadedContent[2]
   }
-  React.useEffect(() => {})
 
   return (
         <div>

@@ -1,42 +1,42 @@
 import {
-    Dialog, DialogActions,
-    DialogContent,
-    DialogContentText,
-    DialogTitle,
-    IconButton,
-    Typography,
-    Switch, createTheme, FormControlLabel
-} from "@mui/material";
-import React from "react";
-import Button from "@mui/material/Button";
-import {Input} from "../input/input.component";
-import NewTaskIcon from "@mui/icons-material/Add";
-import {Tooltip} from "@material-ui/core";
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  IconButton,
+  Typography,
+  Switch,
+  createTheme,
+  FormControlLabel
+} from '@mui/material'
+import React from 'react'
+import Button from '@mui/material/Button'
+import { Input } from '../input/input.component'
+import NewTaskIcon from '@mui/icons-material/Add'
+import { Tooltip } from '@material-ui/core'
 
-let invalidEntry = {invalid: false, reason: ""};
+let invalidEntry = { invalid: false, reason: '' }
 
-export function AddTaskDialog(props){
-
-    const theme = createTheme({
-        palette: {
-            primary: {
-                light: '#f8bbd0',
-                main: '#ec407a',
-                dark: '#880e4f',
-                contrastText: '#fff',
-            },
-        },
-    });
+export function AddTaskDialog (props) {
+  const theme = createTheme({
+    palette: {
+      primary: {
+        light: '#f8bbd0',
+        main: '#ec407a',
+        dark: '#880e4f',
+        contrastText: '#fff'
+      }
+    }
+  })
 
     const [open, setOpen] = React.useState(false);
-
 
     const handleClickOpen = () => {
         setOpen(true);
     };
 
     const handleClose = (event) => {
-
         if(event.target.className.toString().includes("submit"))
         {
             invalidEntry = props.onClick()
