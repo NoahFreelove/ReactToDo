@@ -4,7 +4,7 @@ import {Button as MButton} from '@mui/material'
 export function Button ({title, type, variant = "contained", backgroundColor = "#363a44", ...props}){
         return (
             <MButton
-                style={{backgroundColor:backgroundColor}}
+                style={{backgroundColor:backgroundColor, color:"#FFFFFF"}}
                 variant={variant}
                 type={type}
                 { ...props }

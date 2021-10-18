@@ -22,7 +22,7 @@ export function CheckFourZeroFourPage(props)
         history.push("/login")
         window.location.reload(false);
     }
-    
+
     return(
         <div>
             {isValidPage? null:

@@ -1,7 +1,8 @@
-import {AppBar, createTheme, Grid, Toolbar, Typography} from "@mui/material";
+import {AppBar, createTheme, Grid, IconButton, Link, Toolbar, Typography} from "@mui/material";
 import {UserContextMenu} from "../user-context-menu/user-context-menu.component";
 import React from "react";
 import {Button} from "../button/button.component";
+import {useHistory} from "react-router-dom";
 
 const theme = createTheme({
     palette: {
@@ -14,18 +15,26 @@ const theme = createTheme({
     },
 });
 
-export const Appbar = (props)=>(
-    <AppBar position="static" alignitems="center" theme={theme} color={"primary"}>
-        <Toolbar>
-            <Grid container direction="column">
-                <Grid item>
-                    <Typography variant="h6">{'ToDo List'}</Typography>
-                </Grid>
-            </Grid>
-            <Grid item>
-                <UserContextMenu auth={props.auth} user={props.user} setUser={props.setUser} isAdmin={props.isAdmin}/>
-            </Grid>
+export function Appbar  (props){
+    let history = useHistory()
+    return (
+        <AppBar position="static" alignitems="center" theme={theme} color={"primary"}>
+            <Toolbar>
+                <Grid container direction="column">
+                    <Grid item>
+                        <Button title={"ToDo List"}
+                                backgroundColor={"rgba(255,255,255,0)"}
+                                variant="text"
+                                onClick={() => (history.push("/"))}>
 
-        </Toolbar>
-    </AppBar>
-)
+                        </Button>
+                    </Grid>
+                </Grid>
+                <Grid item>
+                    <UserContextMenu auth={props.auth} user={props.user} setUser={props.setUser} isAdmin={props.isAdmin}/>
+                </Grid>
+
+            </Toolbar>
+        </AppBar>
+    )
+}
