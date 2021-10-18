@@ -1,7 +1,7 @@
 import React from "react";
 import { Task } from "../task/task.component";
 
-export const TaskList = (props) => {
+export function TaskList(props) {
     return (
         <div>
              {props.tasks.map((task) => (

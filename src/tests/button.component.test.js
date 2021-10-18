@@ -1,5 +1,4 @@
 import React from 'react'
-import renderer from 'react-test-renderer'
 import {Button} from '../components/button/button.component'
 import { shallow, configure } from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
