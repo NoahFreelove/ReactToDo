@@ -3,7 +3,7 @@
 import { firebaseConfig } from './config'
 
 import { initializeApp } from '@firebase/app'
-import { doc, setDoc } from 'firebase/firestore'
+import { doc, setDoc, deleteDoc } from 'firebase/firestore'
 import { getDoc, getFirestore } from '@firebase/firestore'
 import { getAuth, sendPasswordResetEmail, signInWithEmailAndPassword } from '@firebase/auth'
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
@@ -112,4 +112,18 @@ async function SignInWithPassword (auth, username, password) {
     })
 }
 
-export { UploadData, DownloadData, ShowSSO, PasswordReset, SignInWithPassword }
+async function DeleteUserData(userID)
+{
+  try {
+    await deleteDoc(doc(db, "users", userID));
+    return true
+  }
+  catch (e)
+  {
+    console.log("Could not delete user data")
+  }
+  return false
+}
+
+
+export { UploadData, DownloadData, ShowSSO, PasswordReset, SignInWithPassword, DeleteUserData }
