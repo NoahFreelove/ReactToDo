@@ -19,26 +19,24 @@ export function SignUpPage(props)
 
     const handleCreateAccount = async () => {
 
-        createUserWithEmailAndPassword(props.auth, email, password)
+        await createUserWithEmailAndPassword(props.auth, email, password)
             .then(async (userCredential) => {
                 // Signed in
                 //const user = userCredential.user;
+                props.setUser(userCredential.user)
                 setCreatedUser(true)
                 await UploadData(0, [], username,false, )
+                    .then(()=>{history.push("/tasks")})
                 // ...
             })
-            .catch((error) => {
-                /*const errorCode = error.code;
-                const errorMessage = error.message;*/
-                // ..
+            .catch(() => {
                 setCreatedUser(false)
-            }).then(()=>{history.push("/tasks")})
+            })
         }
 
     const SingleSignOn = async () => {
         props.setSsologin(true)
-        await ShowSSO(true)
-        history.push("/tasks")
+        await ShowSSO(props.setUser).then(r => { props.setSsoName(r); history.push('/tasks') })
     }
 
 

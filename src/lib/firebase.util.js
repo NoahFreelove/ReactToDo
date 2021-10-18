@@ -71,13 +71,12 @@ async function PasswordReset (email) {
     .then(function () {
       return true
     }).catch(function (e) {
-      console.log(e)
-      return false
+
     })
+
 }
 
-async function ShowSSO (newAccount, setUser) {
-  if (!newAccount) {
+async function ShowSSO (setUser) {
     return await signInWithPopup(auth, provider)
       .then(async (result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
@@ -85,43 +84,17 @@ async function ShowSSO (newAccount, setUser) {
         const token = credential.accessToken
         // The signed-in user info.
         setUser(result.user)
-        return result.user.displayName.split(' ')[0]
+        let username = result.user.displayName.split(' ')[0]
+
+        return username
         // ...
       }).catch((error) => {
         // Handle Errors here.
         const errorCode = error.code
         const errorMessage = error.message
-        // The email of the user's account used.
-        const email = error.email
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error)
         console.log(errorMessage)
         // ...
       })
-  } else {
-    return await signInWithPopup(auth, provider)
-      .then(async (result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = await GoogleAuthProvider.credentialFromResult(result)
-        // The signed-in user info.
-        setUser(result.user)
-        const firstName = result.user.displayName.split(' ')[0]
-
-        await UploadData(0, [], firstName)
-
-        // ...
-      }).catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code
-        const errorMessage = error.message
-        // The email of the user's account used.
-        const email = error.email
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error)
-        console.log(errorMessage)
-        // ...
-      })
-  }
 }
 
 async function SignInWithPassword (auth, username, password) {

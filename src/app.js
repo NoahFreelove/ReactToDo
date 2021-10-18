@@ -21,10 +21,17 @@ function App () {
   const [ssoName, setSsoName] = useState()
 
   function IsAdmin () {
-    if (user === undefined || user === null) {
+      try {
+          if (user === undefined || user === null) {
+            return false
+          }
+          return downloadedContent[2]
+      }
+      catch (e)
+      {
+          console.log(e)
+      }
       return false
-    }
-    return downloadedContent[2]
   }
 
   return (
