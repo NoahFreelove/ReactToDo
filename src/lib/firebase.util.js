@@ -3,7 +3,7 @@
 import { firebaseConfig } from './config'
 
 import { initializeApp } from '@firebase/app'
-import { doc, setDoc, deleteDoc } from 'firebase/firestore'
+import { doc, setDoc, deleteDoc, collection, getDocs } from 'firebase/firestore'
 import { getDoc, getFirestore } from '@firebase/firestore'
 import { getAuth, sendPasswordResetEmail, signInWithEmailAndPassword } from '@firebase/auth'
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
@@ -125,5 +125,12 @@ async function DeleteUserData(userID)
   return false
 }
 
+async function GetUsers(){
+  let userCollection = collection(db, "users")
+  let s = await getDocs(userCollection)
+  return s.docs.map(r=>{
+    return ("User ID: " + r.id + " Name: " + r._document.data.value.mapValue.fields.name.stringValue)
+  })
+}
 
-export { UploadData, DownloadData, ShowSSO, PasswordReset, SignInWithPassword, DeleteUserData }
+export { UploadData, DownloadData, ShowSSO, PasswordReset, SignInWithPassword, DeleteUserData, GetUsers }

@@ -22,10 +22,12 @@ export function Appbar  (props){
             <Toolbar>
                 <Grid container direction="column">
                     <Grid item>
-                        <Button title={"ToDo List"}
+                        <Button title={"ToDo"}
                                 backgroundColor={"rgba(255,255,255,0)"}
                                 variant="text"
-                                onClick={() => (history.push("/"))}>
+                                onClick={() => (history.push("/"))}
+                                sx={{fontSize:"18px"}}
+                        >
 
                         </Button>
                     </Grid>

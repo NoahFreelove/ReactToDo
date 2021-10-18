@@ -1,24 +1,36 @@
-import adminList from '../../config'
-import React, { useState } from 'react'
-import {DeleteUserData, DownloadData} from '../../lib/firebase.util'
+import React, {useState} from 'react'
+import {DeleteUserData, GetUsers} from '../../lib/firebase.util'
 import {Input} from "../../components/input/input.component";
 import {Button} from "../../components/button/button.component";
-import {Alert} from "@mui/material";
+import {Alert, Typography} from "@mui/material";
+import UserList from "../../components/user-list/user-list.component";
 
 export function AdminPage (props) {
     const [userID, setUserID] = useState("")
     const [deletedData, setDeletedData] = useState()
-    if (props.user === null) {
+    const [attemptedDeleteData, setAttemptedDeleteData] = useState()
+    const [userList, setUserList] = useState(null)
+    if (props.auth === null) {
       return (<div>You need to be logged in to use this feature!</div>)
     }
 
   async function DeleteData(){
+        setAttemptedDeleteData(true)
+
         DeleteUserData(userID).then(r=>{
             setDeletedData(r)
         })
   }
 
-  if (props.isAdmin(props.user)) {
+  const RetrieveUserList = async () => {
+      return await GetUsers()
+  }
+
+    async function SetUserList(){
+        setUserList(await RetrieveUserList())
+    }
+
+  if (props.isAdmin(props.auth)) {
     return (
             <div>
               Delete a user's data. (Will not delete their account)
@@ -30,13 +42,25 @@ export function AdminPage (props) {
                      name="email"
                      variant="outlined"
               />
+                <Typography variant={"subtitle"} color={"#ff0000"}>
+                    Your User ID is: {props.user.uid}
+                </Typography>
+                <pre/>
                 <Button onClick={DeleteData} title={"Delete User Data"} backgroundColor={"#ff0000"}/>
-                {deletedData? <Alert severity={"success"}> Deleted Data </Alert>: null }
+                {deletedData? <Alert severity={"success"}> Deleted Data </Alert>: attemptedDeleteData? <Alert severity={"error"}>User does not exist!</Alert>  : null }
+                <pre/>
+                <div>
+                    <Button onClick={SetUserList} title={"Download User List"} backgroundColor={"#4043d5"}/>
+                    <pre/>
+                    <UserList users={userList}/>
+
+                </div>
+                <pre/>
             </div>
     )
   } else {
     return (
-            <div>You don't have access to this page</div>
+        <div>You don't have access to this page</div>
     )
   }
 }

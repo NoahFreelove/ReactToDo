@@ -9,17 +9,17 @@ import { Appbar } from './components/app-bar/app-bar.component'
 import { SignUpPage } from './pages/sign-up/sign-up-page'
 import { ForgotPasswordPage } from './pages/forgot/forgot-password-page'
 
-import { auth as initializedAuth, db as initializedDb } from './lib/firebase.util'
+import {auth as initializedAuth, db as initializedDb, DownloadData} from './lib/firebase.util'
 import AdminPage from './pages/admin/admin-page'
 import { Home } from './pages/home/home-page'
 import {CheckFourZeroFourPage} from "./pages/404-page/404-page";
 
 function App () {
-  const history = useHistory()
-  const [ssoLogin, setSsoLogin] = useState(false)
-  const [downloadedContent, setDownloadedContent] = useState([[], '', false])
-  const [user, setUser] = useState()
-  const [ssoName, setSsoName] = useState()
+    const history = useHistory()
+    const [ssoLogin, setSsoLogin] = useState(false)
+    const [downloadedContent, setDownloadedContent] = useState([[], '', false])
+    const [user, setUser] = useState()
+    const [ssoName, setSsoName] = useState()
 
   function IsAdmin () {
       try {
@@ -35,6 +35,11 @@ function App () {
       return false
   }
 
+  async function ReDownloadContent()
+  {
+      setDownloadedContent(await DownloadData())
+  }
+
   return (
         <div>
             <Router history={history}>
@@ -48,7 +53,10 @@ function App () {
                 </Route>
                 <Route exact path={'/'}>
                     <Home user={user} history={history}
-                          downloadedContent={downloadedContent} setSsoLogin={setSsoLogin}/>
+                          downloadedContent={downloadedContent} setSsoLogin={setSsoLogin}
+                          isAdmin={IsAdmin}
+                          ReDownloadContent={ReDownloadContent}
+                    />
                 </Route>
                 <Route path={'/tasks'} >
                     <Tasks user={user} auth={initializedAuth} history={history}
@@ -68,7 +76,7 @@ function App () {
                     <ForgotPasswordPage auth={initializedAuth}/>
                 </Route>
                 <Route path={'/admin'}>
-                    <AdminPage isAdmin={IsAdmin} user={initializedAuth}/>
+                    <AdminPage isAdmin={IsAdmin} user={user} auth={initializedAuth}/>
                 </Route>
             </Router>
             <CheckFourZeroFourPage history={history}/>
