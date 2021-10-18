@@ -12,6 +12,7 @@ import { ForgotPasswordPage } from './pages/forgot/forgot-password-page'
 import { auth as initializedAuth, db as initializedDb } from './lib/firebase.util'
 import AdminPage from './pages/admin/admin-page'
 import { Home } from './pages/home/home-page'
+import {CheckFourZeroFourPage} from "./pages/404-page/404-page";
 
 function App () {
   const history = useHistory()
@@ -70,6 +71,7 @@ function App () {
                     <AdminPage isAdmin={IsAdmin} user={initializedAuth}/>
                 </Route>
             </Router>
+            <CheckFourZeroFourPage history={history}/>
         </div>
   )
 }
