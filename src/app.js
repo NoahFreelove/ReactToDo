@@ -43,7 +43,7 @@ function App () {
   return (
         <div>
             <Router history={history}>
-                <Appbar user={user} auth={initializedAuth} setUser={setUser} isAdmin={IsAdmin}/>
+                <Appbar downloadedContent={downloadedContent} user={user} auth={initializedAuth} setUser={setUser} isAdmin={IsAdmin}/>
 
                 <Route exact path={'/login'}>
                     <Login auth={initializedAuth} setUser={setUser} user={user}

@@ -70,9 +70,9 @@ async function PasswordReset (email) {
   return sendPasswordResetEmail(auth, email)
     .then(function () {
       return true
-    }).catch(function (e) {
-      console.log(e)
-    })
+    }).catch(()=>{
+    //ignore
+    }).then(()=>{return false})
 
 }
 
