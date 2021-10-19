@@ -1,12 +1,12 @@
 // noinspection JSCheckFunctionSignatures
 
-import { firebaseConfig } from './config'
+import {firebaseConfig} from './config'
 
-import { initializeApp } from '@firebase/app'
-import { doc, setDoc, deleteDoc, collection, getDocs } from 'firebase/firestore'
-import { getDoc, getFirestore } from '@firebase/firestore'
-import { getAuth, sendPasswordResetEmail, signInWithEmailAndPassword } from '@firebase/auth'
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+import {initializeApp} from '@firebase/app'
+import {collection, deleteDoc, doc, getDocs, setDoc} from 'firebase/firestore'
+import {getDoc, getFirestore} from '@firebase/firestore'
+import {getAuth, sendPasswordResetEmail, signInWithEmailAndPassword} from '@firebase/auth'
+import {GoogleAuthProvider, signInWithPopup} from 'firebase/auth'
 
 export const app = initializeApp(firebaseConfig)
 export const db = getFirestore(app)
@@ -55,7 +55,7 @@ function ArrayToMap (arr) {
 function MapToArray (newMap) {
   let count = 0
 
-  for (const prop in newMap) { if (newMap.hasOwnProperty(prop)) ++count }
+  for (const prop in newMap) { if (Object.prototype.hasOwnProperty.call(newMap, prop)) ++count }
 
   const newArr = []
 
@@ -71,7 +71,7 @@ async function PasswordReset (email) {
     .then(function () {
       return true
     }).catch(function (e) {
-
+      console.log(e)
     })
 
 }
@@ -80,17 +80,13 @@ async function ShowSSO (setUser) {
     return await signInWithPopup(auth, provider)
       .then(async (result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = await GoogleAuthProvider.credentialFromResult(result)
-        const token = credential.accessToken
+        await GoogleAuthProvider.credentialFromResult(result)
         // The signed-in user info.
         setUser(result.user)
-        let username = result.user.displayName.split(' ')[0]
-
-        return username
+        return result.user.displayName.split(' ')[0]
         // ...
       }).catch((error) => {
         // Handle Errors here.
-        const errorCode = error.code
         const errorMessage = error.message
         console.log(errorMessage)
         // ...
@@ -106,10 +102,8 @@ async function SignInWithPassword (auth, username, password) {
       // ...
     })
     .catch((error) => {
-      const errorCode = error.code
-      const errorMessage = error.message
-      return [null, false]
-    })
+      console.log(error)
+    }).then(()=>{return [null, false]})
 }
 
 async function DeleteUserData(userID)

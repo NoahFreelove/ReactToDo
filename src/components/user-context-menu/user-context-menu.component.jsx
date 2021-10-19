@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import {useHistory} from "react-router-dom";
@@ -31,7 +30,6 @@ function ShowAccount(handleClose, signedIn,user, isAdmin){
 export function UserContextMenu (props) {
     let history = useHistory()
     let signedIn = (props.user !== undefined)
-    let signInOutText =  !signedIn? "Sign In" : "Sign Out"
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
 

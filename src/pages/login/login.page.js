@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { LoginForm } from '../../components/login-form/login-form'
 import { useHistory } from 'react-router-dom'
-import { signInWithEmailAndPassword } from '@firebase/auth'
 import { ShowSSO, SignInWithPassword } from '../../lib/firebase.util'
 import {
   Alert,
@@ -9,7 +8,6 @@ import {
 } from '@mui/material'
 
 import './login.css'
-import { Button } from '../../components/button/button.component'
 
 export function Login (props) {
   const history = useHistory()

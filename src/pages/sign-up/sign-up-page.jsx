@@ -4,7 +4,6 @@ import {Button} from "../../components/button/button.component";
 import React, {useState} from "react";
 import {createUserWithEmailAndPassword} from "@firebase/auth";
 import GoogleIcon from "@mui/icons-material/Google";
-import {GoogleAuthProvider, signInWithPopup} from "firebase/auth";
 import {useHistory} from "react-router-dom";
 import {ShowSSO, UploadData} from "../../lib/firebase.util";
 
@@ -15,7 +14,6 @@ export function SignUpPage(props)
     const [password, setPassword] = useState('pass')
     const [createdUser, setCreatedUser] = useState(false)
     let history = useHistory();
-    const provider = new GoogleAuthProvider();
 
     const handleCreateAccount = async () => {
 

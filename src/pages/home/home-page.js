@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 import { Button } from '../../components/button/button.component'
 import { Redirect, useHistory } from 'react-router-dom'
 import { Typography } from '@material-ui/core'
@@ -9,8 +9,6 @@ let taskNum = 0
 let isAdmin = false
 export function Home (props) {
     const history = useHistory()
-
-    const [tasks, setTasks] = useState()
     const loggedIn = (props.user !== undefined)
 
     useEffect(() => {

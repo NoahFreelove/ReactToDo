@@ -1,25 +1,24 @@
-import { sendPasswordResetEmail } from '@firebase/auth'
-import React, { useState } from 'react'
+import React from 'react'
 import { Alert, Input, Typography } from '@mui/material'
 import { Button } from '../../components/button/button.component'
 import { Grid } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
 import { PasswordReset } from '../../lib/firebase.util'
 
-export function ForgotPasswordPage (props) {
-  let email
-  const history = useHistory()
-  const [createdUser, setCreatedUser] = useState()
+export function ForgotPasswordPage() {
+    let email
+    let createdUser
+    const history = useHistory()
 
-  const handlePasswordReset = async () => {
-    await PasswordReset(email)
-  }
+    const handlePasswordReset = async () => {
+      await PasswordReset(email)
+    }
 
-  const handleClick = () => {
-    history.push('/')
-  }
+    const handleClick = () => {
+      history.push('/')
+    }
 
-  return (
+    return (
         <div>
             <pre className="space"/>
             <Grid container direction="column" alignItems="center" justify="center">

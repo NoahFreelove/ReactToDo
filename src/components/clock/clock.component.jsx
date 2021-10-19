@@ -4,6 +4,6 @@ import {Typography} from "@mui/material";
 
 export const Clock = ({ displayDate }) => (
     <div>
-        <Typography component="h1" variant="h6">It's {displayDate}</Typography>
+        <Typography component="h1" variant="h6">It&apos;s {displayDate}</Typography>
     </div>
 )

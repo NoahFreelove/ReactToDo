@@ -1,4 +1,4 @@
-import {AppBar, createTheme, Grid, IconButton, Link, Toolbar, Typography} from "@mui/material";
+import {AppBar, createTheme, Grid, Toolbar} from "@mui/material";
 import {UserContextMenu} from "../user-context-menu/user-context-menu.component";
 import React from "react";
 import {Button} from "../button/button.component";

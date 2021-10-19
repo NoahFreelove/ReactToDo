@@ -1,5 +1,6 @@
 import React from "react";
 import {Button as MButton} from '@mui/material'
+import PropTypes from "prop-types";
 
 export function Button ({title, type, variant = "contained", backgroundColor = "#363a44", ...props}){
         return (
@@ -12,6 +13,12 @@ export function Button ({title, type, variant = "contained", backgroundColor = "
                     {title}
             </MButton>
         )
+}
+Button.propTypes = {
+    title: PropTypes.string,
+    type: PropTypes.string,
+    variant: PropTypes.string,
+    backgroundColor: PropTypes.string
 }
 /*export const Button= ( title, type, variant = "contained", backgroundColor = "#363a44", ...props ) =>
  (

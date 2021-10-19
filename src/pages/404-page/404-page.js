@@ -1,5 +1,4 @@
 import React from 'react'
-import {useHistory} from "react-router-dom";
 import {Typography} from "@material-ui/core";
 import {Button} from "../../components/button/button.component";
 

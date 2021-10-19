@@ -5,12 +5,11 @@ import { TaskList } from '../../components/task-list/task-list.component';
 import './Tasks.css';
 import {Typography} from "@mui/material";
 import {AddTaskDialog} from "../../components/add-task/add-task-dialog.component";
-import {doc, getDoc} from "@firebase/firestore";
+import {doc} from "@firebase/firestore";
 import {LoadTasks} from "../../components/load-tasks/download-tasks.component";
 import {UploadTasks} from "../../components/save-tasks/upload-tasks.component";
-import {map} from "react-bootstrap/ElementChildren";
 import {DownloadData, UploadData} from "../../lib/firebase.util";
-import {SetSsoName} from "../../app"
+
 class Tasks extends React.Component {
 
   constructor(props) {

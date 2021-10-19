@@ -68,7 +68,7 @@ return(
                     </Grid>
 
                     <Grid item>
-                        <Typography >Don't Have A ToDo Account?</Typography>
+                        <Typography >Don&apos;t Have A ToDo Account?</Typography>
                     </Grid>
 
                     <Grid item>

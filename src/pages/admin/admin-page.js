@@ -33,7 +33,7 @@ export function AdminPage (props) {
   if (props.isAdmin(props.auth)) {
     return (
             <div>
-              Delete a user's data. (Will not delete their account)
+              Delete a user&apos;s data. (Will not delete their account)
               <Input style={{width: 400}}
                      type="input"
                      placeholder="User ID"
@@ -60,7 +60,7 @@ export function AdminPage (props) {
     )
   } else {
     return (
-        <div>You don't have access to this page</div>
+        <div>You don&apos;t have access to this page</div>
     )
   }
 }
