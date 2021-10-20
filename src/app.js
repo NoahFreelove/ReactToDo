@@ -13,11 +13,12 @@ import {auth as initializedAuth, db as initializedDb, DownloadData} from './lib/
 import AdminPage from './pages/admin/admin-page'
 import { Home } from './pages/home/home-page'
 import {CheckFourZeroFourPage} from "./pages/404-page/404-page";
+import Settings from "./pages/settings/settings";
 
 function App () {
     const history = useHistory()
     const [ssoLogin, setSsoLogin] = useState(false)
-    const [downloadedContent, setDownloadedContent] = useState([[], '', false])
+    const [downloadedContent, setDownloadedContent] = useState([[], '', false, {avatar:""}])
     const [user, setUser] = useState()
     const [ssoName, setSsoName] = useState()
 
@@ -44,7 +45,6 @@ function App () {
         <div>
             <Router history={history}>
                 <Appbar downloadedContent={downloadedContent} user={user} auth={initializedAuth} setUser={setUser} isAdmin={IsAdmin}/>
-
                 <Route exact path={'/login'}>
                     <Login auth={initializedAuth} setUser={setUser} user={user}
                            setSsoName={setSsoName}
@@ -77,6 +77,9 @@ function App () {
                 </Route>
                 <Route path={'/admin'}>
                     <AdminPage isAdmin={IsAdmin} user={user} auth={initializedAuth}/>
+                </Route>
+                <Route path={"/settings"}>
+                    <Settings user={user} downloadedContent={downloadedContent} ReDownloadContent={ReDownloadContent}/>
                 </Route>
             </Router>
             <CheckFourZeroFourPage history={history}/>

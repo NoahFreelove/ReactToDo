@@ -53,7 +53,6 @@ export function AdminPage (props) {
                     <Button onClick={SetUserList} title={"Download User List"} backgroundColor={"#4043d5"}/>
                     <pre/>
                     <UserList users={userList}/>
-
                 </div>
                 <pre/>
             </div>

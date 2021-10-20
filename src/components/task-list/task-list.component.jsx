@@ -4,8 +4,8 @@ import { Task } from "../task/task.component";
 export function TaskList(props) {
     return (
         <div >
-             {props.tasks.map((task) => (
-                 <Task key={"TaskListElement"}
+             {props.tasks.map((task, i) => (
+                 <Task key={i}
                     name={task.name}
                     expired={task.expired}
                     expires={task.expires}

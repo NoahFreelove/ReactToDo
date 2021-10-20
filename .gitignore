@@ -6,7 +6,6 @@
 .pnp.js
 /.firebase
 npm-debug.log
-/*.env
 /.idea
 
 # testing

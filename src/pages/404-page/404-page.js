@@ -5,7 +5,7 @@ import {Button} from "../../components/button/button.component";
 export function CheckFourZeroFourPage(props)
 {
     let history = props.history
-    let validPages = ["/login", "/", "/signup", "/forgot", "/tasks", "/admin"]
+    let validPages = ["/login", "/", "/signup", "/forgot", "/tasks", "/admin", "/settings"]
     let isValidPage;
 
     for (let i = 0; i < validPages.length; i++) {

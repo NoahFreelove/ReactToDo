@@ -7,8 +7,8 @@ export const Input = ({labelText, autoFocus, ...props}) => (
             variant="outlined"
             fullWidth
             autoFocus={autoFocus}
-            placeholder={labelText}
             {...props}
+            defaultValue={labelText}
         />
     </div>
 )

@@ -10,6 +10,8 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 import CreateIcon from '@mui/icons-material/Create';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import {IconButton} from "@mui/material";
+import SettingsIcon from '@mui/icons-material/Settings';
+
 function ShowAccount(handleClose, signedIn,user, isAdmin){
     if(!signedIn)
     {
@@ -20,6 +22,8 @@ function ShowAccount(handleClose, signedIn,user, isAdmin){
             <div>
                 <MenuItem className={"home"} onClick={handleClose}><HomeIcon/>Home</MenuItem>
                 <MenuItem className={"tasks"} onClick={handleClose}><CreateIcon/> View Tasks</MenuItem>
+                <MenuItem className={"settings"} onClick={handleClose}><SettingsIcon/> Settings</MenuItem>
+
                 {isAdmin()?<MenuItem className={"view-admin-page"} onClick={handleClose}><SecurityIcon/> Admin Page</MenuItem> : null}
             </div>
         )
@@ -54,6 +58,9 @@ export function UserContextMenu (props) {
         }
         else if (event.currentTarget.className.includes("home")) {
             history.push("/")
+        }
+        else if (event.currentTarget.className.includes("settings")) {
+            history.push("/settings")
         }
     }
 

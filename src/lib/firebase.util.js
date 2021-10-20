@@ -14,23 +14,27 @@ export const auth = getAuth()
 
 const provider = new GoogleAuthProvider()
 
-async function UploadData (UploadType, newTasks = [], username = '', admin = false) {
+async function UploadData (UploadType, newTasks = [], username = '', admin = false, settings=  {avatar: ""}) // eslint-disable-line no-unused-vars
+{
+  console.log(newTasks)
   if (UploadType === 0) {
     newTasks = {}
   } else {
     newTasks = ArrayToMap(newTasks)
+    console.log(settings)
   }
   try {
     await setDoc(doc(db, 'users', auth.currentUser.uid), {
       admin: admin,
       name: username,
+      settings: settings,
       tasks: newTasks
     })
     return true
   } catch (e) {
     console.log(e)
-    return false
   }
+  return false
 }
 
 async function DownloadData () {
@@ -39,7 +43,7 @@ async function DownloadData () {
   }
   const docSnap = await getDoc(doc(db, 'users', auth.currentUser.uid))
   if (docSnap.exists()) {
-    return [MapToArray(docSnap.data().tasks), docSnap.data().name, docSnap.data().admin]
+    return [MapToArray(docSnap.data().tasks), docSnap.data().name, docSnap.data().admin, docSnap.data().settings]
   } else {
     // return await UploadData(0, ssoName, [])
   }
@@ -127,4 +131,4 @@ async function GetUsers(){
   })
 }
 
-export { UploadData, DownloadData, ShowSSO, PasswordReset, SignInWithPassword, DeleteUserData, GetUsers }
+export { UploadData, DownloadData, ShowSSO, PasswordReset, SignInWithPassword, DeleteUserData, GetUsers, MapToArray, ArrayToMap }

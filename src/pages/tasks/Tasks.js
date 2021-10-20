@@ -15,7 +15,6 @@ class Tasks extends React.Component {
   constructor(props) {
     super(props);
 
-
     this.state = {
         tasks: [],
         newTaskTitle: "",
@@ -55,7 +54,7 @@ class Tasks extends React.Component {
                   this.setState({username: downloadedContent[1]})
               }
           }
-          // if the user data hasnt been created, create it then load it
+          // if the user data hasn't been created, create it then load it
           catch (e)
           {
               console.log(e)
