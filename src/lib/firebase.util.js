@@ -107,7 +107,10 @@ async function SignInWithPassword (auth, username, password) {
     })
     .catch((error) => {
       console.log(error)
-    }).then(()=>{return [null, false]})
+      return [null, false]
+
+    })
+
 }
 
 async function DeleteUserData(userID)
