@@ -98,7 +98,8 @@ async function ShowSSO (setUser) {
 }
 
 async function SignInWithPassword (auth, username, password) {
-  return await signInWithEmailAndPassword(auth, username, password)
+
+  let data = await signInWithEmailAndPassword(auth, username, password)
     .then((userCredential) => {
       // Signed in
       return [userCredential, true]
@@ -107,9 +108,12 @@ async function SignInWithPassword (auth, username, password) {
     })
     .catch((error) => {
       console.log(error)
-      return [null, false]
-
     })
+  if(data == null || data == undefined)
+  {
+    return [null, false]
+  }
+return data
 
 }
 
