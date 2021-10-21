@@ -11,6 +11,7 @@ export function Settings(props){
     const loggedIn = (props.user !== undefined)
     const [settings, setSettings] = useState({avatar:""})
     const [avatarURL, setAvatarURL] = useState()
+    const [username, setUsername] = useState()
     const [savedSettings, setSavedSettings] = useState()
 
     function ChangeAvatar(e)// eslint-disable-line no-unused-vars
@@ -18,10 +19,20 @@ export function Settings(props){
         setAvatarURL(e.target.value)
     }
 
+    function ChangeUsername(e)// eslint-disable-line no-unused-vars
+    {
+        if(e.target.value.toString().length > 25)
+        {
+            setUsername(username)
+        }
+        else {
+            setUsername(e.target.value)
+        }
+    }
+
+
     function HandleSaveSettings()
     {
-        console.log(avatarURL)
-
         setSavedSettings(true)
         SaveSettings().then((r) => r? setSavedSettings(false):setSavedSettings(true))
     }
@@ -31,7 +42,7 @@ export function Settings(props){
             settings.avatar = avatarURL
             await UploadData(1,
                 [props.downloadedContent[0]],
-                props.downloadedContent[1],
+                username,
                 props.downloadedContent[2],
                 settings)
         }catch (e)
@@ -43,6 +54,7 @@ export function Settings(props){
     useEffect(()=>{
         props.ReDownloadContent()
         setAvatarURL(props.downloadedContent[3].avatar)
+        setUsername(props.downloadedContent[1])
 
         setSettings({avatar: props.downloadedContent[3]})
     },[])
@@ -61,7 +73,18 @@ export function Settings(props){
                            placeholder={"Avatar URL"}
                            onChange={ChangeAvatar}
                            variant="outlined"
-                           labelText={avatarURL}
+                           value={avatarURL}
+                    />
+                </Typography>
+
+                <Typography variant={"body1"}>
+                    Set Username (Keep to 25 characters)
+                    <Input style={{width: 400}}
+                           type="input"
+                           placeholder={"Avatar URL"}
+                           onChange={ChangeUsername}
+                           variant="outlined"
+                           value={username}
                     />
                 </Typography>
 

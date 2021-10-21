@@ -16,12 +16,10 @@ const provider = new GoogleAuthProvider()
 
 async function UploadData (UploadType, newTasks = [], username = '', admin = false, settings=  {avatar: ""}) // eslint-disable-line no-unused-vars
 {
-  console.log(newTasks)
   if (UploadType === 0) {
     newTasks = {}
   } else {
     newTasks = ArrayToMap(newTasks)
-    console.log(settings)
   }
   try {
     await setDoc(doc(db, 'users', auth.currentUser.uid), {

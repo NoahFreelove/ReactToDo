@@ -1,4 +1,4 @@
-import {AppBar, createTheme, Grid, Toolbar, Avatar} from "@mui/material"; // eslint-disable-line no-unused-vars
+import {AppBar, createTheme, Toolbar, Avatar} from "@mui/material"; // eslint-disable-line no-unused-vars
 import {UserContextMenu} from "../user-context-menu/user-context-menu.component";
 import React from "react";
 import {Button} from "../button/button.component";
