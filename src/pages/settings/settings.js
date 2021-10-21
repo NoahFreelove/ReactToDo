@@ -55,16 +55,14 @@ export function Settings(props){
                 </Typography>
                 <pre/>
                 <Typography variant={"body1"}>
-                    Set Avatar
+                    Set Avatar (64x64 works best)
                     <Input style={{width: 400}}
                            type="input"
                            placeholder={"Avatar URL"}
                            onChange={ChangeAvatar}
                            variant="outlined"
-                           labelText={settings.avatar}
-
+                           labelText={avatarURL}
                     />
-
                 </Typography>
 
                 <Button title={"Save Settings"} backgroundColor={"#48ce53"} onClick={HandleSaveSettings}/>

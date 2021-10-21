@@ -3,6 +3,7 @@ import {UserContextMenu} from "../user-context-menu/user-context-menu.component"
 import React from "react";
 import {Button} from "../button/button.component";
 import {useHistory} from "react-router-dom";
+import {Box} from "@material-ui/core";
 
 const theme = createTheme({
     palette: {
@@ -17,12 +18,11 @@ const theme = createTheme({
 
 export function Appbar  (props){
     let history = useHistory()
-    if(props.downloadedContent !== undefined){
+    if(props.downloadedContent !== undefined && props.user !== undefined){
         return (
             <AppBar position="static" theme={theme} color={"primary"}>
                 <Toolbar>
-                    <Grid container spacing={2} direction="row">
-                        <Grid item xs={5.5}>
+                        <Box sx={{flexGrow: 1}}>
                             <Button title={"ToDo"}
                                     backgroundColor={"rgba(255,255,255,0)"}
                                     variant="text"
@@ -31,8 +31,8 @@ export function Appbar  (props){
                             >
 
                             </Button>
-                        </Grid>
-                        <Grid item xs={5.5}>
+                        </Box>
+                        <Box sx={{ flexGrow: 1}}>
                             {(props.downloadedContent.length===4)?
                                 (props.downloadedContent[1] === '')?
                                     null :
@@ -41,11 +41,10 @@ export function Appbar  (props){
                                         <Avatar><img src={props.downloadedContent[3].avatar} alt={"avatar"}/></Avatar>
                                 :
                                 null}
-                        </Grid>
-                        <Grid item xs={1}>
+                        </Box>
+                        <Box>
                             <UserContextMenu auth={props.auth} user={props.user} setUser={props.setUser} isAdmin={props.isAdmin}/>
-                        </Grid>
-                    </Grid>
+                        </Box>
                 </Toolbar>
             </AppBar>
         )
@@ -54,8 +53,7 @@ export function Appbar  (props){
         return (
             <AppBar position="static" theme={theme} color={"primary"}>
                 <Toolbar>
-                    <Grid container spacing={2} direction="row">
-                        <Grid item xs={5.5}>
+                    <Box sx={{ flexGrow: 1}}>
                             <Button title={"ToDo"}
                                     backgroundColor={"rgba(255,255,255,0)"}
                                     variant="text"
@@ -64,11 +62,10 @@ export function Appbar  (props){
                             >
 
                             </Button>
-                        </Grid>
-                        <Grid item xs={1}>
+                        </Box>
+                        <Box>
                             <UserContextMenu auth={props.auth} user={props.user} setUser={props.setUser} isAdmin={props.isAdmin}/>
-                        </Grid>
-                    </Grid>
+                        </Box>
                 </Toolbar>
             </AppBar>
         )
