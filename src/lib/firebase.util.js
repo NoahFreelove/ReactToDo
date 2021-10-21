@@ -131,8 +131,12 @@ async function DeleteUserData(userID)
 async function GetUsers(){
   let userCollection = collection(db, "users")
   let s = await getDocs(userCollection)
-  return s.docs.map(r=>{
-    return ("User ID: " + r.id + " Name: " + r._document.data.value.mapValue.fields.name.stringValue)
+  return s.docs.map((r,i)=>{
+
+    return (i + ". User ID: " + r.id +
+        " Name: " + r._document.data.value.mapValue.fields.name.stringValue +
+            " IsAdmin: " + r._document.data.value.mapValue.fields.admin.booleanValue
+    )
   })
 }
 

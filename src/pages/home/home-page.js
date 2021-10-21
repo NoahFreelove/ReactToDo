@@ -44,6 +44,11 @@ export function Home (props) {
                         onClick={() => {history.push('/tasks')}}/>
                 </div>
                 <pre/>
+                <Button title={'Change Settings'}
+                        backgroundColor={'#c73694'}
+                        onClick={() => {history.push('/settings')}}/>
+                <pre/>
+
                 <div>
                 {isAdmin?
                     <Button title={'Admin Page'}

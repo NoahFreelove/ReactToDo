@@ -4,7 +4,7 @@ export function UserList(props){
     return(
         <div>
             User List:
-            {(props.users==null)? " No Users": props.users.map(r => (<div key={"user-listItem"}>{r}</div>))}
+            {(props.users==null)? " No Users": props.users.map((r, i) => (<div key={i}>{r}</div>))}
         </div>
     )
 }

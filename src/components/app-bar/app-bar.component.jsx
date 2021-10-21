@@ -26,7 +26,7 @@ export function Appbar  (props){
                             <Button title={"ToDo"}
                                     backgroundColor={"rgba(255,255,255,0)"}
                                     variant="text"
-                                    onClick={() => (history.push("/"))}
+                                    onClick={() => (history.push("/tasks"))}
                                     sx={{fontSize:"18px"}}
                             >
 
@@ -38,7 +38,9 @@ export function Appbar  (props){
                                     null :
                                     (props.downloadedContent[3].avatar === '')?
                                         <Avatar sx={{ backgroundColor: "#1a71c9"}}>{props.downloadedContent[1].charAt(0)}</Avatar> :
-                                        <Avatar><img src={props.downloadedContent[3].avatar} alt={"avatar"}/></Avatar>
+                                        <Avatar><img src={props.downloadedContent[3].avatar}
+                                                     alt={"avatar"}
+                                                     style={{maxHeight: "100%", maxWidth: "100%"}}/></Avatar>
                                 :
                                 null}
                         </Box>
