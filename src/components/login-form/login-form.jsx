@@ -10,11 +10,17 @@ import {
 } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
 import "./login-form.css";
+import {Form} from "react-bootstrap";
 
 export function LoginForm(props)
 {
     let history = useHistory();
 
+    function KeyPress(e){
+    if(e.key === "Enter"){
+        props.onButtonClick()
+    }
+}
 return(
     <div>
             <Grid container direction="column" alignItems="center" justify="center">
@@ -24,13 +30,14 @@ return(
                 </Typography>
             </Grid>
 
-            <form>
+            <Form onSubmit={props.onButtonClick}>
                 <Grid container direction="column" spacing={2} alignItems="center" justify="center">
                     <Grid item>
                         <Input style={{width: 400}}
                                type="input"
                                placeholder="E-mail"
                                onChange={props.changeUsername}
+                               onKeyDown={KeyPress}
                                variant="outlined"
                         />
                     </Grid>
@@ -39,6 +46,7 @@ return(
                                type="password"
                                placeholder="Password"
                                onChange={props.changePassword}
+                               onKeyDown={KeyPress}
                                fullWidth
                                name="password"
                                variant="outlined"
@@ -46,9 +54,9 @@ return(
                         Forgot?
                     </Link>
                     </Grid>
-
                     <Grid item>
                         <Button
+                            id={"sign-in-btn"}
                             title="Sign In"
                             className="button-click"
                             onClick={props.onButtonClick}
@@ -84,7 +92,7 @@ return(
 
                 </Grid>
 
-            </form>
+            </Form>
 
     </div>
 )
