@@ -24,7 +24,7 @@ export function ForgotPasswordPage() {
             <Grid container direction="column" alignItems="center" justify="center">
                 <Typography variant={'h5'}>Reset Password</Typography>
 
-                <Input style={{ width: 400 }}
+                <Input style={{ width: 350 }}
                        type="input"
                        placeholder="E-mail"
                        onChange={event => (email = event.target.value)}

@@ -46,8 +46,8 @@ export function AdminPage (props) {
                     Your User ID is: {props.user.uid}
                 </Typography>
                 <pre/>
-                <Button onClick={DeleteData} title={"Delete User Data"} backgroundColor={"#ff0000"}/>
                 {deletedData? <Alert severity={"success"}> Deleted Data </Alert>: attemptedDeleteData? <Alert severity={"error"}>User does not exist!</Alert>  : null }
+                <Button onClick={DeleteData} title={"Delete User Data"} backgroundColor={"#ff0000"}/>
                 <pre/>
                 <div>
                     <Button onClick={SetUserList} title={"Download User List"} backgroundColor={"#4043d5"}/>

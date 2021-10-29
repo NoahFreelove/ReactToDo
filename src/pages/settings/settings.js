@@ -2,8 +2,8 @@
 import React, {useEffect, useState} from 'react'
 import {Redirect} from "react-router-dom";
 import {Typography} from "@material-ui/core";
-import {Input} from "../../components/input/input.component";// eslint-disable-line no-unused-vars
-import {ArrayToMap, UploadData} from "../../lib/firebase.util";// eslint-disable-line no-unused-vars
+import {Input} from "../../components/input/input.component";
+import {UploadData} from "../../lib/firebase.util";
 import {Button} from "../../components/button/button.component";
 import {Alert} from "@mui/material";
 
@@ -14,12 +14,12 @@ export function Settings(props){
     const [username, setUsername] = useState()
     const [savedSettings, setSavedSettings] = useState()
 
-    function ChangeAvatar(e)// eslint-disable-line no-unused-vars
+    function ChangeAvatar(e)
     {
         setAvatarURL(e.target.value)
     }
 
-    function ChangeUsername(e)// eslint-disable-line no-unused-vars
+    function ChangeUsername(e)
     {
         if(e.target.value.toString().length > 25)
         {
@@ -30,13 +30,13 @@ export function Settings(props){
         }
     }
 
-
     function HandleSaveSettings()
     {
         setSavedSettings(true)
         SaveSettings().then((r) => r? setSavedSettings(false):setSavedSettings(true))
     }
-    async function SaveSettings()// eslint-disable-line no-unused-vars
+
+    async function SaveSettings()
     {
         try {
             settings.avatar = avatarURL

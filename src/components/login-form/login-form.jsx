@@ -33,7 +33,7 @@ return(
             <Form onSubmit={props.onButtonClick}>
                 <Grid container direction="column" spacing={2} alignItems="center" justify="center">
                     <Grid item>
-                        <Input style={{width: 400}}
+                        <Input style={{width: 350}}
                                type="input"
                                placeholder="E-mail"
                                onChange={props.changeUsername}
@@ -42,7 +42,7 @@ return(
                         />
                     </Grid>
                     <Grid item>
-                        <Input style={{width: 400}}
+                        <Input style={{width: 350}}
                                type="password"
                                placeholder="Password"
                                onChange={props.changePassword}

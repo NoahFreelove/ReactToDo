@@ -107,11 +107,12 @@ async function SignInWithPassword (auth, username, password) {
     .catch((error) => {
       console.log(error)
     })
-  if(data == null || data == undefined)
+  if(!data)
   {
     return [null, false]
   }
-return data
+
+  return data
 
 }
 
@@ -132,8 +133,7 @@ async function GetUsers(){
   let userCollection = collection(db, "users")
   let s = await getDocs(userCollection)
   return s.docs.map((r,i)=>{
-
-    return (i + ". User ID: " + r.id +
+    return (i + `. User ID: ` + r.id +
         " Name: " + r._document.data.value.mapValue.fields.name.stringValue +
             " IsAdmin: " + r._document.data.value.mapValue.fields.admin.booleanValue
     )
