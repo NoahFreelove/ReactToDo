@@ -90,7 +90,7 @@ export function AddTaskDialog (props) {
                 </DialogContent>
                 <DialogActions>
                     <Button className={"cancel"} onClick={handleClose}>Cancel</Button>
-                    <Button className={"submit"} onClick={handleClose}>Submit</Button>
+                    <Button className={"submit"} onClick={handleClose}>Create</Button>
                 </DialogActions>
             </Dialog>
 
